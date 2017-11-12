@@ -18,6 +18,23 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Billboard.cpp" />
+    <ClCompile Include="Header.cpp" />
+    <ClCompile Include="LineList.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Scine.cpp" />
+    <ClCompile Include="StringList.cpp" />
+    <ClCompile Include="TimeTable.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Billboard.h" />
+    <ClInclude Include="Header.h" />
+    <ClInclude Include="LineList.h" />
+    <ClInclude Include="Scine.h" />
+    <ClInclude Include="StringList.h" />
+    <ClInclude Include="TimeTable.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{7C8BEE7D-7F58-4E9C-9EBB-3C93944555FF}</ProjectGuid>
@@ -152,9 +169,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Source.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
