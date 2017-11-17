@@ -23,7 +23,6 @@
     <ClCompile Include="Header.cpp" />
     <ClCompile Include="LineList.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Scine.cpp" />
     <ClCompile Include="StringList.cpp" />
     <ClCompile Include="TimeTable.cpp" />
   </ItemGroup>
@@ -31,7 +30,6 @@
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="LineList.h" />
-    <ClInclude Include="Scine.h" />
     <ClInclude Include="StringList.h" />
     <ClInclude Include="TimeTable.h" />
   </ItemGroup>
