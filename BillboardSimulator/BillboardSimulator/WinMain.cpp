@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include "Billboard.h"
+#include "MainFrame.h"
 
 
 
@@ -19,7 +20,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ChangeWindowMode(TRUE);							//ウィンドウモードで起動
 	SetGraphMode(SCREENWIDTH, SCREENHEIGHT, 32);	//画面幅・高さ・色ビット深度
 	SetDrawScreen(DX_SCREEN_BACK);					//描画は裏画面で行う
+	if (DxLib_Init() == -1) return -1;				//DxLibの起動
 	/*初期設定*/
+
+
+	/*メインフレームの構築*/
+	MainFrame mainframe;
+	mainframe.Start();
+	/*メインフレームの構築*/
 
 
 	/*電光掲示板の用意*/
