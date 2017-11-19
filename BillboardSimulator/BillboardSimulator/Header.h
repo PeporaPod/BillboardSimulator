@@ -19,25 +19,12 @@
 //
 const int SCREENWIDTH	= 1500;					//画面幅
 const int SCREENHEIGHT	=  775;					//画面高
+const int COLORBITDEPTH =   32;					//色ビット深度
 const int RADIUS		=    2;					//LED半径
 const int DISTANCE		= (2 * (RADIUS + 1));	//LEDの中心距離
+const int LED_ROW		=   16;					//LED行数
 const int DISPLAYROW	=    8;					//表示列車数
 const int DISPLAYTIME	= 2500;					//表示時間[ミリ秒]
-
-
-
-//
-//	型の別名定義
-//
-//		負の数を除く整数	:	unsigned int				→ UNSIGNEDINT
-//		色コード			:	unsigned int				→ COLOR
-//		ブール平面			:	std::vector<std::vector>>	→ BOOLTABLE
-//
-//
-typedef unsigned int			UNSIGNEDINT;	//負の数を除く整数(ゼロ / 自然数)
-typedef unsigned int			COLOR;			//色コード
-typedef std::vector<bool>		BOOLROW;		//ブール行
-typedef std::vector<BOOLROW>	BOOLTABLE;		//ブール表
 
 
 
@@ -53,13 +40,12 @@ typedef std::vector<BOOLROW>	BOOLTABLE;		//ブール表
 //
 //
 typedef struct LED {
-	int		x;		//横軸位置
-	int		y;		//縦軸位置
-	COLOR	color;	//色
+				int	x;		//横軸位置
+				int	y;		//縦軸位置
+	unsigned	int color;	//色
 }LED;
-typedef std::vector<LED>				LEDROW;		//LED行
-typedef std::vector<std::vector<LED>>	LEDTABLE;	//LED表
-#define LED_OFF							4280229663	//仮想消灯色(unsigned int GetColor(32, 32, 32))
+typedef std::vector<LED>				LED_ARRAY;	//LED配列
+typedef std::vector<std::vector<LED>>	LED_MATRIX;	//LEDマトリクス
 
 
 
@@ -80,14 +66,14 @@ typedef struct TABLESIZE {
 	int column	= 0;	//横幅
 }TABLESIZE;
 typedef struct StringInformation {
-	std::string	string;	//文字列
-	BOOLTABLE	table;	//点灯表
-	TABLESIZE	size;	//サイズ
-	COLOR		color;	//色
+				char		string[24];		//文字列
+				int			width;			//LED幅
+				char		type;			//文字列種別
+	unsigned	int			R;				//赤濃度
+	unsigned	int			G;				//緑濃度
+	unsigned	int			B;				//青濃度
+	unsigned	long long	LED_Status[16];	//LED点灯表
 }StringInformation;
-#define SEGDIRECTORY "SEG\\"
-#define SEGNUMBERSTRINGDIRECTORY "SEG\\NUMBERSTRING\\"
-#define SEGEXTENSION ".seg"
 
 
 
@@ -99,32 +85,25 @@ typedef struct StringInformation {
 //
 //
 typedef struct LineInformation {
-	std::string	line;
-	COLOR		color[2];
+	std::string		line;
+	unsigned int	color[2];
 }LineInformation;
 typedef std::vector<LineInformation> LINELIST;
-#define LINEFILE "DATA\\LINE.csv"
 
 
 
 //
 //	列車情報
 //
-//		路線(ID)
-//		種別(ID)
-//		発車時刻
-//		行先(ID)
-//
 //
 typedef struct TrainInformation {
-	COLOR linecolor;
-	int	line;
-	int	type;
-	int	time;
-	int	destination;
+	std::string line;
+	std::string type;
+	std::string departure_time;
+	std::string destination;
+	std::string platform;
 }TrainInformation;
 typedef std::vector<TrainInformation> TIMETABLE;
-#define TIMETABLEFILE "DATA\\TIMETABLE.csv"
 
 
 
@@ -136,3 +115,8 @@ typedef std::vector<TrainInformation> TIMETABLE;
 //
 //
 bool Check_StringToInt(std::string string);
+
+
+
+//
+bool LoadBinaryString(std::vector<StringInformation>& vecstrinfo, int filenumber);

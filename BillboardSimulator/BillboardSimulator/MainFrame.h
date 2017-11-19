@@ -1,13 +1,15 @@
 #pragma once
 #include "Billboard.h"
+#include "TimeTable.h"
+#include "StringList.h"
 class MainFrame
 {
 private:
-	Billboard billboard;	//“dŒõŒf¦”Â
+	Billboard billboard;
+	TimeTable timetable;
+	StringList stringlist;
 public:
 	MainFrame();
 	bool Start();
-	bool Process();
 	~MainFrame();
 };
-

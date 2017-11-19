@@ -4,24 +4,24 @@
 
 MainFrame::MainFrame()
 {
-	SetAlwaysRunFlag(TRUE);
-	ChangeWindowMode(TRUE);
-	SetGraphMode(SCREENWIDTH, SCREENHEIGHT, 32);
-	SetDrawScreen(DX_SCREEN_BACK);
+	SetAlwaysRunFlag(TRUE);							//常時処理
+	ChangeWindowMode(TRUE);							//ウィンドウモード起動
+	SetGraphMode(SCREENWIDTH, SCREENHEIGHT, 32);	//画面幅・高さ・色ビット深度
+	SetDrawScreen(DX_SCREEN_BACK);					//裏画面描画
+	DxLib_Init();									//DxLibの起動
 }
 
 bool MainFrame::Start()
 {
-	if (DxLib_Init() == -1) return false;
-	return billboard.Init();
-}
+	printfDx("Initializing Billboard\n"); ScreenFlip();
+	billboard.Init();
+	billboard.Start();
 
-bool MainFrame::Process()
-{
-	return false;
+	
+	return true;
 }
-
 
 MainFrame::~MainFrame()
 {
+	DxLib_End();							//DxLibの終了
 }

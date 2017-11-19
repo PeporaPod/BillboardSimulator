@@ -4,14 +4,12 @@
 class Billboard
 {
 private:
-	/*LED板本体*/
-	LEDTABLE	ledtable;			//LEDの行列
-	TABLESIZE	tablesize;			//LEDの行列数
-	/*LED板本体*/
-
-	/*データ*/
-	TimeTable	timetable;			//時刻表
-	/*データ*/
+	/*LEDマトリクス*/
+				int			led_row;								//LED高
+				int			led_column;								//LED幅
+				LED_MATRIX	led_matrix;								//LEDの行列
+	unsigned	int			led_color_off = GetColor(32, 32, 32);	//LED消灯色
+	/*LEDマトリクス*/
 
 	/*更新トリガ*/
 	DATEDATA	prev_datetime;		//前回の処理を行った時刻
@@ -21,8 +19,7 @@ private:
 	/*更新トリガ*/
 public:
 	Billboard();							//コンストラクタ及び初期化処理
-
-	bool Init();							//初期化処理
+	void Init();							//初期化処理
 	void Start();							//開始処理
 	void Clear();							//LEDを全て消灯する
 	void Set();								//裏画面へ描画

@@ -60,16 +60,16 @@ LineList::LineList()
 int LineList::Init()
 {
 	/*ファイルオープン*/
-	std::ifstream file(LINEFILE);
-	if (!file.is_open()) return -1;
+//	std::ifstream file(LINEFILE);
+//	if (!file.is_open()) return -1;
 	/*ファイルオープン*/
 
 	int count = 0;	//読み込んだ路線数
 
 	/*路線読み込み*/
-	while (!file.eof()) {
+//	while (!file.eof()) {
 		std::string str;
-		std::getline(file, str);
+//		std::getline(file, str);
 		std::istringstream strstream(str);
 
 		std::list<std::string> element;
@@ -81,11 +81,12 @@ int LineList::Init()
 
 		if (LineList::Process(element))
 			count++;						//路線数をカウント
+		return 0;
 	}
 	/*路線読み込み*/
 
-	return count;	//読み込んだ路線数
-}
+//	return count;	//読み込んだ路線数
+//}
 
 
 
@@ -93,7 +94,7 @@ int LineList::Init()
 //	路線カラーをLEDに反映
 //
 //
-void LineList::Set(LEDTABLE & led_table, TABLESIZE table_size, int line_id, int y)
+void LineList::Set(LED_MATRIX & led_table, TABLESIZE table_size, int line_id, int y)
 {
 	if (line_id == -1) return;
 
