@@ -17,7 +17,6 @@ bool MainFrame::Start()
 	billboard.Init();
 	billboard.Start();
 
-	
 	return true;
 }
 

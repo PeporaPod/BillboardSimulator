@@ -78,6 +78,10 @@ void Billboard::Start()
 	DATEDATA now_datetime;
 	GetDateTime(&now_datetime);
 	Billboard::Process(now_datetime);
+
+	while (!ProcessMessage()) {
+
+	}
 }
 
 
