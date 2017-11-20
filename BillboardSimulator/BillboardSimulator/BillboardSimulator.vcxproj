@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -23,6 +23,9 @@
     <ClCompile Include="Header.cpp" />
     <ClCompile Include="LineList.cpp" />
     <ClCompile Include="MainFrame.cpp" />
+    <ClCompile Include="ModeChangerFrame.cpp" />
+    <ClCompile Include="SimulatorFrame.cpp" />
+    <ClCompile Include="StringCheckerFrame.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="StringList.cpp" />
     <ClCompile Include="TimeTable.cpp" />
@@ -32,6 +35,9 @@
     <ClInclude Include="Header.h" />
     <ClInclude Include="LineList.h" />
     <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="ModeChangerFrame.h" />
+    <ClInclude Include="SimulatorFrame.h" />
+    <ClInclude Include="StringCheckerFrame.h" />
     <ClInclude Include="StringList.h" />
     <ClInclude Include="TimeTable.h" />
   </ItemGroup>
