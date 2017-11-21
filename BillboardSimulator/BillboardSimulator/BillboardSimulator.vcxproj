@@ -20,26 +20,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Billboard.cpp" />
-    <ClCompile Include="Header.cpp" />
-    <ClCompile Include="LineList.cpp" />
     <ClCompile Include="MainFrame.cpp" />
-    <ClCompile Include="ModeChangerFrame.cpp" />
-    <ClCompile Include="SimulatorFrame.cpp" />
-    <ClCompile Include="StringCheckerFrame.cpp" />
+    <ClCompile Include="ModeSelectorFrame.cpp" />
+    <ClCompile Include="StringDisplayFrame.cpp" />
     <ClCompile Include="WinMain.cpp" />
-    <ClCompile Include="StringList.cpp" />
-    <ClCompile Include="TimeTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="Header.h" />
-    <ClInclude Include="LineList.h" />
     <ClInclude Include="MainFrame.h" />
-    <ClInclude Include="ModeChangerFrame.h" />
-    <ClInclude Include="SimulatorFrame.h" />
-    <ClInclude Include="StringCheckerFrame.h" />
-    <ClInclude Include="StringList.h" />
-    <ClInclude Include="TimeTable.h" />
+    <ClInclude Include="ModeSelectorFrame.h" />
+    <ClInclude Include="StringDisplayFrame.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

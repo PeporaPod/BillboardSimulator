@@ -1,16 +1,15 @@
 #pragma once
-#include "ModeChangerFrame.h"
-#include "SimulatorFrame.h"
-#include "StringCheckerFrame.h"
+#include <DxLib.h>
+#include "ModeSelectorFrame.h"
+#include "StringDisplayFrame.h"
 class MainFrame
 {
-private:
-	char mode;
-	ModeChangerFrame* modechangerframe;
-	SimulatorFrame* simulatorframe;
-	StringCheckerFrame* stringcheckerframe;
+	int mode;
+	ModeSelectorFrame* modeselectorframe;
+	StringDisplayFrame* stringdisplayframe;
 public:
 	MainFrame();
-	bool Start();
+	void Start();
 	~MainFrame();
 };
+
