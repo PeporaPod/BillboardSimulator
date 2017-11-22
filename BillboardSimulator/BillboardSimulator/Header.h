@@ -22,3 +22,13 @@ typedef struct LED {
 }LED;
 typedef std::vector<LED>				LED_ARRAY;
 typedef std::vector<std::vector<LED>>	LED_MATRIX;
+
+
+typedef struct TrainInformation {
+	int line_id;
+}TrainInformation;
+
+
+typedef struct StringInformation {
+	std::string string;
+}StringInformation;

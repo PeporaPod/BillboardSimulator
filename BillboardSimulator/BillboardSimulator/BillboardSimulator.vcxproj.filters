@@ -48,6 +48,12 @@
     <ClCompile Include="StringEditorFrame.cpp">
       <Filter>ソース ファイル\ApplicationFrame</Filter>
     </ClCompile>
+    <ClCompile Include="StringFile.cpp">
+      <Filter>ソース ファイル\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Timetable.cpp">
+      <Filter>ソース ファイル\Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrame.h">
@@ -70,6 +76,12 @@
     </ClInclude>
     <ClInclude Include="StringEditorFrame.h">
       <Filter>ヘッダー ファイル\ApplicationFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="StringFile.h">
+      <Filter>ヘッダー ファイル\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Timetable.h">
+      <Filter>ヘッダー ファイル\Elements</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

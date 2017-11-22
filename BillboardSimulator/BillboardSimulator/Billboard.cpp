@@ -55,9 +55,9 @@ void Billboard::Init(int top, int bottom, int left, int right, int row, int colu
 
 	/*LEDの配置*/
 	for (int row = 1; row <= led_row; row++)
-		axis_y.push_back(top + (bottom - top) / (led_row + 1) * row);			//LED位置(縦軸方向)
+		axis_y.push_back(top + row * (bottom - top) / (led_row + 1));			//LED位置(縦軸方向)
 	for (int column = 1; column <= led_column; column++)
-		axis_x.push_back(left + (right - left) / (led_column + 1) * column);	//LED位置(横軸方向)
+		axis_x.push_back(left + column * (right - left) / (led_column + 1));	//LED位置(横軸方向)
 	color = std::vector<std::vector<unsigned int>>(led_row, std::vector<unsigned int>(led_column, color_outofrange));
 	/*LEDの配置*/
 }

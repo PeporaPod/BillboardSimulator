@@ -25,6 +25,8 @@
     <ClCompile Include="SimulatorFrame.cpp" />
     <ClCompile Include="StringDisplayFrame.cpp" />
     <ClCompile Include="StringEditorFrame.cpp" />
+    <ClCompile Include="StringFile.cpp" />
+    <ClCompile Include="Timetable.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +37,8 @@
     <ClInclude Include="SimulatorFrame.h" />
     <ClInclude Include="StringDisplayFrame.h" />
     <ClInclude Include="StringEditorFrame.h" />
+    <ClInclude Include="StringFile.h" />
+    <ClInclude Include="Timetable.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
