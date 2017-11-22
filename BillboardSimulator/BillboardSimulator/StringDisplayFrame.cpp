@@ -4,10 +4,10 @@
 
 StringDisplayFrame::StringDisplayFrame()
 {
+	SetAlwaysRunFlag(FALSE);
 	SetGraphMode(SCREENWIDTH_STRINGDISPLAY, SCREENHEIGHT_STRINGDISPLAY, COLORBITDEPTH);
-	SetDrawScreen(DX_SCREEN_BACK);
-	
-	SetFontSize(SCREENHEIGHT_STRINGDISPLAY / 3 / 2);
+	SetDrawScreen(DX_SCREEN_FRONT);
+	SetFontSize(SCREENHEIGHT_STRINGDISPLAY / 12);
 }
 
 void StringDisplayFrame::Start()

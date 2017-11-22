@@ -4,8 +4,10 @@
 
 ModeSelectorFrame::ModeSelectorFrame()
 {
-	SetGraphMode(1500, 800, 32);
-	SetFontSize(40);
+	SetAlwaysRunFlag(FALSE);
+	SetGraphMode(SCREENWIDTH_MAIN, SCREENHEIGHT_MAIN, COLORBITDEPTH);
+	SetDrawScreen(DX_SCREEN_FRONT);
+	SetFontSize(SCREENHEIGHT_MAIN / 12);
 }
 
 int ModeSelectorFrame::Start()
