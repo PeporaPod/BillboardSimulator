@@ -13,6 +13,7 @@ StringDisplayFrame::StringDisplayFrame()
 void StringDisplayFrame::Start()
 {
 	billboard.Init(SCREENHEIGHT_STRINGDISPLAY / 3, SCREENHEIGHT_STRINGDISPLAY, 0, SCREENWIDTH_STRINGDISPLAY, LED_ROW, LED_COLUMN);
+	stringfile.Init();
 	billboard.Draw();
 	WaitKey();
 }

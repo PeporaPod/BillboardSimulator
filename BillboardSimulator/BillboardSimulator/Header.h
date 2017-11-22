@@ -14,6 +14,7 @@ const int COLORBITDEPTH					=   32;
 const int LED_RADIUS					=    2;
 const int LED_ROW						=   16;
 const int LED_COLUMN					=   64;
+const int STRING_LENGTH					=   24;
 
 
 typedef struct LED {
@@ -30,5 +31,9 @@ typedef struct TrainInformation {
 
 
 typedef struct StringInformation {
-	std::string string;
+	char string[STRING_LENGTH] = { NULL };
+	int width = LED_COLUMN;
+	char type = '?';
+	unsigned __int8 R = 32, G = 32, B = 32;
+	unsigned long long led_status[LED_ROW] = { 0 };
 }StringInformation;
