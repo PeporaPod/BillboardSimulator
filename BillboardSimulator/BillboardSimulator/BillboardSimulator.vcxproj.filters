@@ -45,6 +45,9 @@
     <ClCompile Include="SimulatorFrame.cpp">
       <Filter>ソース ファイル\ApplicationFrame</Filter>
     </ClCompile>
+    <ClCompile Include="StringEditorFrame.cpp">
+      <Filter>ソース ファイル\ApplicationFrame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrame.h">
@@ -63,6 +66,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SimulatorFrame.h">
+      <Filter>ヘッダー ファイル\ApplicationFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="StringEditorFrame.h">
       <Filter>ヘッダー ファイル\ApplicationFrame</Filter>
     </ClInclude>
   </ItemGroup>

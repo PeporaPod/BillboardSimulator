@@ -10,7 +10,7 @@ MainFrame::MainFrame()
 	DxLib_Init();
 }
 
-void MainFrame::Start()
+bool MainFrame::Start()
 {
 	do {
 		mode = -1;
@@ -31,10 +31,16 @@ void MainFrame::Start()
 			stringdisplayframe->Start();
 			delete stringdisplayframe;
 			break;
+		case 3:
+			stringeditorframe = new StringEditorFrame;
+			stringeditorframe->Start();
+			delete stringeditorframe;
+			break;
 		default:
-			return;
+			return false;
 		}
 	} while (mode);
+	return true;
 }
 
 

@@ -24,6 +24,7 @@
     <ClCompile Include="ModeSelectorFrame.cpp" />
     <ClCompile Include="SimulatorFrame.cpp" />
     <ClCompile Include="StringDisplayFrame.cpp" />
+    <ClCompile Include="StringEditorFrame.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +34,7 @@
     <ClInclude Include="ModeSelectorFrame.h" />
     <ClInclude Include="SimulatorFrame.h" />
     <ClInclude Include="StringDisplayFrame.h" />
+    <ClInclude Include="StringEditorFrame.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

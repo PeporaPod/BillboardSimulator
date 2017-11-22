@@ -3,15 +3,17 @@
 #include "ModeSelectorFrame.h"
 #include "SimulatorFrame.h"
 #include "StringDisplayFrame.h"
+#include "StringEditorFrame.h"
 class MainFrame
 {
 	int mode;
-	ModeSelectorFrame* modeselectorframe;
-	SimulatorFrame* simulatorframe;
-	StringDisplayFrame* stringdisplayframe;
+	ModeSelectorFrame*	modeselectorframe;
+	SimulatorFrame*		simulatorframe;
+	StringDisplayFrame*	stringdisplayframe;
+	StringEditorFrame*	stringeditorframe;
 public:
 	MainFrame();
-	void Start();
+	bool Start();
 	~MainFrame();
 };
 

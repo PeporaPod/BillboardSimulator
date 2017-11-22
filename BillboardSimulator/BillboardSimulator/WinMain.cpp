@@ -5,6 +5,6 @@
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	MainFrame mainframe;
-	mainframe.Start();
-	return 0;
+	if (mainframe.Start()) return 0;
+	return -1;
 }
