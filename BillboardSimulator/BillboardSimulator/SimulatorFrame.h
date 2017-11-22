@@ -1,13 +1,12 @@
 #pragma once
-#include <DxLib.h>
 #include "Billboard.h"
-class StringDisplayFrame
+class SimulatorFrame
 {
 private:
 	Billboard billboard;
 public:
-	StringDisplayFrame();
+	SimulatorFrame();
 	void Start();
-	~StringDisplayFrame();
+	~SimulatorFrame();
 };
 

@@ -22,6 +22,7 @@
     <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="ModeSelectorFrame.cpp" />
+    <ClCompile Include="SimulatorFrame.cpp" />
     <ClCompile Include="StringDisplayFrame.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -30,6 +31,7 @@
     <ClInclude Include="Header.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="ModeSelectorFrame.h" />
+    <ClInclude Include="SimulatorFrame.h" />
     <ClInclude Include="StringDisplayFrame.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

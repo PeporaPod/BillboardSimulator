@@ -5,6 +5,7 @@
 ModeSelectorFrame::ModeSelectorFrame()
 {
 	SetGraphMode(1500, 800, 32);
+	SetFontSize(40);
 }
 
 int ModeSelectorFrame::Start()
