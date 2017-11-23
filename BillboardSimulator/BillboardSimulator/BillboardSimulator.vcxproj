@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Billboard.cpp" />
+    <ClCompile Include="EditorControler.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="ModeSelectorFrame.cpp" />
     <ClCompile Include="SimulatorFrame.cpp" />
@@ -31,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Billboard.h" />
+    <ClInclude Include="EditorControler.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="ModeSelectorFrame.h" />

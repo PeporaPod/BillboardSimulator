@@ -17,6 +17,7 @@ public:
 	Billboard();
 	void Init();
 	void Init(int top, int bottom, int left, int right, int row, int column);
+	void GetAxis(std::vector<int>& axis_1, std::vector<int>& axis_2);
 	void Draw();
 	~Billboard();
 };

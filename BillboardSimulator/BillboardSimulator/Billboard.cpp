@@ -62,6 +62,12 @@ void Billboard::Init(int top, int bottom, int left, int right, int row, int colu
 	/*LED‚Ì”z’u*/
 }
 
+void Billboard::GetAxis(std::vector<int>& axis_1, std::vector<int>& axis_2)
+{
+	axis_1 = axis_x;
+	axis_2 = axis_y;
+}
+
 void Billboard::Draw()
 {
 	ClearDrawScreen();

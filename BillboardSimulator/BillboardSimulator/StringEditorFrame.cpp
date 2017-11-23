@@ -15,6 +15,7 @@ void StringEditorFrame::Start()
 	billboard.Init(SCREENHEIGHT_STRINGEDITOR / 2, SCREENHEIGHT_STRINGEDITOR, 0, SCREENWIDTH_STRINGEDITOR, LED_ROW, LED_COLUMN);
 	billboard.Draw();
 	stringfile.Init();
+	editorcontroler.Init(billboard);
 	WaitKey();
 }
 

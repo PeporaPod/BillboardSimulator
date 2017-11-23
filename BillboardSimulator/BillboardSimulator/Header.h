@@ -27,7 +27,16 @@ typedef std::vector<std::vector<LED>>	LED_MATRIX;
 
 typedef struct TrainInformation {
 	int line_id;
+	int type_id;
+	int destination_id;
 }TrainInformation;
+
+
+typedef struct TrainInformationAsString {
+	std::vector<std::string> line;
+	std::vector<std::string> type;
+	std::vector<std::string> destination;
+}TrainInformationAsString;
 
 
 typedef struct StringInformation {
