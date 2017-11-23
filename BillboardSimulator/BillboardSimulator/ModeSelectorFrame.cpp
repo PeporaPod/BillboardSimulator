@@ -32,7 +32,7 @@ ModeSelectorFrame::ModeSelectorFrame()
 int ModeSelectorFrame::Start()
 {
 	//選択肢を表示
-	DrawString(0, 0, "\nSelect Mode\n 0: End\n 1: Simulator\n 2: String Display\n 3: String Editor", GetColor(200, 200, 200));
+	DrawString(0, 0, "\nモードを選択して下さい\n 0: プログラムの終了\n 1: シミュレータモード\n 2: 文字列確認モード\n 3: 文字列編集モード", GetColor(200, 200, 200));
 
 	/*モード選択*/
 	do {

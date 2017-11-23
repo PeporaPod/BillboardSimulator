@@ -21,6 +21,13 @@ void StringFile::GetStringInformation(StringInformation& stringinformation, int 
 
 StringFile::~StringFile()
 {
+	std::ofstream file("STR\\list.txt");
+	if (!file.is_open()) return;
+	char number[4];
+	for (unsigned int i = 0; i < stringvector.size(); i++) {
+		sprintf_s<sizeof(number)>(number, "%3d", i + 1);
+		file << number << " | " << stringvector[i].string << std::endl;
+	}
 }
 
 void StringFile::singularity()

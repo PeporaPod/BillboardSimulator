@@ -1,6 +1,7 @@
 #pragma once
 #include "Header.h"
 #include <fstream>
+#include <iostream>
 #include <string>
 class StringFile
 {
@@ -10,7 +11,7 @@ private:
 public:
 	StringFile();
 	void Init();
-	void GetStringInformation(StringInformation& stringinformation, int offset);
+	void GetStringInformation(StringInformation& stringinformation, int number);
 	~StringFile();
 private:
 	void singularity();
