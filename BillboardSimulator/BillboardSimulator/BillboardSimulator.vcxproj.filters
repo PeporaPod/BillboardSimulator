@@ -60,9 +60,6 @@
     <ClCompile Include="Timetable.cpp">
       <Filter>ソース ファイル\Elements</Filter>
     </ClCompile>
-    <ClCompile Include="EditorControler.cpp">
-      <Filter>ソース ファイル\Controler</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrame.h">
@@ -91,9 +88,6 @@
     </ClInclude>
     <ClInclude Include="Timetable.h">
       <Filter>ヘッダー ファイル\Elements</Filter>
-    </ClInclude>
-    <ClInclude Include="EditorControler.h">
-      <Filter>ヘッダー ファイル\Controler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

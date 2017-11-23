@@ -28,11 +28,11 @@ void Billboard::Init()
 
 	/*LEDを配置する*/
 	for (int row = 1; row <= led_row; row++)
-		axis_y.push_back(row * (radius + 1) * 2);		//LED位置(縦軸方向)
+		position_y.push_back(row * (radius + 1) * 2);		//LED位置(縦軸方向)
 	for (int column = 1; column <= led_column; column++)
-		axis_x.push_back(column * (radius + 1) * 2);	//LED位置(横軸方向)
+		position_x.push_back(column * (radius + 1) * 2);	//LED位置(横軸方向)
 	//LED発光色を`消灯色`で初期化
-	color = std::vector<std::vector<unsigned int>>(led_row, std::vector<unsigned int>(led_column, color_off));
+	color_matrix = std::vector<std::vector<unsigned int>>(led_row, std::vector<unsigned int>(led_column, color_off));
 	/*LEDを配置する*/
 	/*LEDマトリクスの生成*/
 }
@@ -55,17 +55,25 @@ void Billboard::Init(int top, int bottom, int left, int right, int row, int colu
 
 	/*LEDの配置*/
 	for (int row = 1; row <= led_row; row++)
-		axis_y.push_back(top + row * (bottom - top) / (led_row + 1));			//LED位置(縦軸方向)
+		position_y.push_back(top + row * (bottom - top) / (led_row + 1));			//LED位置(縦軸方向)
 	for (int column = 1; column <= led_column; column++)
-		axis_x.push_back(left + column * (right - left) / (led_column + 1));	//LED位置(横軸方向)
-	color = std::vector<std::vector<unsigned int>>(led_row, std::vector<unsigned int>(led_column, color_outofrange));
+		position_x.push_back(left + column * (right - left) / (led_column + 1));	//LED位置(横軸方向)
+	color_matrix = std::vector<std::vector<unsigned int>>(led_row, std::vector<unsigned int>(led_column, color_outofrange));
 	/*LEDの配置*/
 }
 
-void Billboard::GetAxis(std::vector<int>& axis_1, std::vector<int>& axis_2)
+void Billboard::Commit(unsigned long long led_matrix[], unsigned int color)
 {
-	axis_1 = axis_x;
-	axis_2 = axis_y;
+	for (int row = 0; row < led_row; row++) {
+		unsigned long long operatorbit = 0x8000000000000000;
+		for (int column = 0; column < led_column; column++) {
+			if (led_matrix[row] & operatorbit)
+				color_matrix[row][column] = color;
+			else
+				color_matrix[row][column] = color_off;
+			operatorbit = operatorbit >> 1;
+		}
+	}
 }
 
 void Billboard::Draw()
@@ -73,7 +81,7 @@ void Billboard::Draw()
 	ClearDrawScreen();
 	for (int row = 0; row < led_row; row++)
 		for (int column = 0; column < led_column; column++)
-			DrawCircle(axis_x[column], axis_y[row], radius, color[row][column]);
+			DrawCircle(position_x[column], position_y[row], radius, color_matrix[row][column]);
 	ScreenFlip();
 }
 

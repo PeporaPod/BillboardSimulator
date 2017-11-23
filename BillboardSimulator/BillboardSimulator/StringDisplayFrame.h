@@ -9,6 +9,7 @@ private:
 	Billboard	billboard;
 	Timetable	timetable;
 	StringFile	stringfile;
+	StringInformation stringinformation;
 public:
 	StringDisplayFrame();
 	void Start();

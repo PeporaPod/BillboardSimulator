@@ -17,14 +17,6 @@ const int LED_COLUMN					=   64;
 const int STRING_LENGTH					=   24;
 
 
-typedef struct LED {
-	int x, y;
-	unsigned int color;
-}LED;
-typedef std::vector<LED>				LED_ARRAY;
-typedef std::vector<std::vector<LED>>	LED_MATRIX;
-
-
 typedef struct TrainInformation {
 	int line_id;
 	int type_id;

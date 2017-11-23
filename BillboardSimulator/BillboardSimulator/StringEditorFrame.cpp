@@ -13,13 +13,16 @@ StringEditorFrame::StringEditorFrame()
 void StringEditorFrame::Start()
 {
 	billboard.Init(SCREENHEIGHT_STRINGEDITOR / 2, SCREENHEIGHT_STRINGEDITOR, 0, SCREENWIDTH_STRINGEDITOR, LED_ROW, LED_COLUMN);
+	billboard.Commit(stringinformation.led_status, GetColor(stringinformation.R, stringinformation.G, stringinformation.B));
 	billboard.Draw();
-	stringfile.Init();
-	editorcontroler.Init(billboard);
 	WaitKey();
 }
 
 
 StringEditorFrame::~StringEditorFrame()
+{
+}
+
+void StringEditorFrame::WriteOut()
 {
 }
