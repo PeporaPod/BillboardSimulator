@@ -14,6 +14,7 @@ void StringDisplayFrame::Start()
 {
 	billboard.Init(SCREENHEIGHT_STRINGDISPLAY / 3, SCREENHEIGHT_STRINGDISPLAY, 0, SCREENWIDTH_STRINGDISPLAY, LED_ROW, LED_COLUMN);
 	stringfile.Init();
+	stringfile.GetStringInformation(stringinformation, 0);
 	billboard.Commit(stringinformation.led_status, GetColor(stringinformation.R, stringinformation.G, stringinformation.B));
 	billboard.Draw();
 	WaitKey();

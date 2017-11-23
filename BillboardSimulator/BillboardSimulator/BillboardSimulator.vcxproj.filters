@@ -19,17 +19,11 @@
     <Filter Include="ヘッダー ファイル\ApplicationFrame">
       <UniqueIdentifier>{3182d386-b27f-46b9-9f65-397409220ef3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Elements">
-      <UniqueIdentifier>{89b60a53-4883-4440-973f-7b5dd360d940}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Elements">
       <UniqueIdentifier>{868d8640-e52a-46c4-bf42-61cc8caa80f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Controler">
-      <UniqueIdentifier>{d19d64ce-d7b0-43c8-a340-78943824298c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Controler">
-      <UniqueIdentifier>{e564a3e7-0900-4dcf-b7b8-75af51dca6be}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Elements">
+      <UniqueIdentifier>{89b60a53-4883-4440-973f-7b5dd360d940}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

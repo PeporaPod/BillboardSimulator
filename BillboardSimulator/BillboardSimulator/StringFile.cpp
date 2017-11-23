@@ -12,6 +12,12 @@ void StringFile::Init()
 	singularity();
 }
 
+void StringFile::GetStringInformation(StringInformation& stringinformation, int number)
+{
+	if ((unsigned int)number < stringvector.size())
+		stringinformation = stringvector[number];
+}
+
 
 StringFile::~StringFile()
 {
@@ -35,7 +41,7 @@ void StringFile::singularity()
 			}
 			strinfo.led_status[row] = led_array;
 		}
-		stringlist.push_back(strinfo);
+		stringvector.push_back(strinfo);
 		file.close();
 	}
 	file.open("0", std::fstream::binary);
@@ -49,7 +55,7 @@ void StringFile::singularity()
 		file.read((char*)&strinfo.B, sizeof(StringInformation::B));
 		for (int row = 0; row < LED_ROW; row++)
 			file.read((char*)&strinfo.led_status[row], sizeof(unsigned long long));
-		stringlist.push_back(strinfo);
+		stringvector.push_back(strinfo);
 		file.close();
 	}
 }
@@ -71,27 +77,7 @@ bool StringFile::LoadBinaryString(int filenumber)
 	file.read((char*)&strinfo.B, sizeof(StringInformation::B));
 	for (int row = 0; row < LED_ROW; row++)
 		file.read((char*)&strinfo.led_status[row], sizeof(unsigned long long));
-	stringlist.push_back(strinfo);
+	stringvector.push_back(strinfo);
 	return true;
 }
 
-void StringFile::Assort()
-{
-	while (!stringlist.empty()) {
-		switch (stringlist.front().type) {
-		case 'J':
-		case 'E':
-			stringvector.push_back(stringlist.front());
-			stringlist.pop_front();
-			break;
-		case 'N':
-			numberstring.push_back(stringlist.front());
-			stringlist.pop_front();
-			break;
-		default:
-			symbolstring.push_back(stringlist.front());
-			stringlist.pop_front();
-			break;
-		}
-	}
-}
