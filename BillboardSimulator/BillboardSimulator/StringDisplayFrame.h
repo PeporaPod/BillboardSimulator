@@ -6,6 +6,7 @@
 class StringDisplayFrame
 {
 private:
+	int string_id;
 	Billboard	billboard;
 	Timetable	timetable;
 	StringFile	stringfile;
@@ -14,5 +15,7 @@ public:
 	StringDisplayFrame();
 	void Start();
 	~StringDisplayFrame();
+private:
+	void MainLoop();
 };
 

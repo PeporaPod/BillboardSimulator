@@ -71,7 +71,7 @@ void Billboard::Commit(unsigned long long led_matrix[], unsigned int color)
 				color_matrix[row][column] = color;
 			else
 				color_matrix[row][column] = color_off;
-			operatorbit = operatorbit >> 1;
+			operatorbit >>= 1;
 		}
 	}
 }

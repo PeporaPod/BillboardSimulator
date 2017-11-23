@@ -12,10 +12,13 @@ void StringFile::Init()
 	singularity();
 }
 
-void StringFile::GetStringInformation(StringInformation& stringinformation, int number)
+bool StringFile::GetStringInformation(StringInformation& stringinformation, int number)
 {
-	if ((unsigned int)number < stringvector.size())
+	if ((unsigned int)number < stringvector.size()) {
 		stringinformation = stringvector[number];
+		return true;
+	}
+	return false;
 }
 
 
@@ -26,7 +29,7 @@ StringFile::~StringFile()
 	char number[4];
 	for (unsigned int i = 0; i < stringvector.size(); i++) {
 		sprintf_s<sizeof(number)>(number, "%3d", i + 1);
-		file << number << " | " << stringvector[i].string << std::endl;
+		file << number << " | " << stringvector[i].type << ": " << stringvector[i].string << std::endl;
 	}
 }
 
@@ -44,7 +47,7 @@ void StringFile::singularity()
 			for (int column = 0; (unsigned int)column < str.size() && column < LED_COLUMN; row++) {
 				if (str[column] = '1')
 					led_array = led_array & operatorbit;
-				operatorbit = operatorbit >> 1;
+				operatorbit >>= 1;
 			}
 			strinfo.led_status[row] = led_array;
 		}

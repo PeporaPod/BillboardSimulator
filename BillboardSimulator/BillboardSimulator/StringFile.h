@@ -11,7 +11,7 @@ private:
 public:
 	StringFile();
 	void Init();
-	void GetStringInformation(StringInformation& stringinformation, int number);
+	bool GetStringInformation(StringInformation& stringinformation, int number);
 	~StringFile();
 private:
 	void singularity();
