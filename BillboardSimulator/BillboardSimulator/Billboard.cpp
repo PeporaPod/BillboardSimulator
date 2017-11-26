@@ -6,6 +6,18 @@ Billboard::Billboard()
 {
 }
 
+
+
+//
+//	初期化メソッド(フル用)
+//
+//		/*指定LED半径でLEDを配置する*/
+//		画面情報取得
+//		LEDの配置数を計算
+//		配置
+//
+//
+//
 void Billboard::Init()
 {
 	/*LEDマトリクスの生成*/
@@ -37,8 +49,20 @@ void Billboard::Init()
 	/*LEDマトリクスの生成*/
 }
 
+
+
+//
+//	初期化メソッド(16x64用)
+//
+//		/*指定範囲に指定数のLEDを配置*/
+//		LED半径の計算
+//		配置
+//
+//
+//
 void Billboard::Init(int top, int bottom, int left, int right, int row, int column)
 {
+	/*LEDマトリクスの生成*/
 	/*配置できるLEDの数の確定*/
 	led_row = row;																//行数
 	led_column = column;														//列数
@@ -54,13 +78,17 @@ void Billboard::Init(int top, int bottom, int left, int right, int row, int colu
 
 
 	/*LEDの配置*/
-	for (int row = 1; row <= led_row; row++)
-		position_y.push_back(top + row * (bottom - top) / (led_row + 1));			//LED位置(縦軸方向)
-	for (int column = 1; column <= led_column; column++)
-		position_x.push_back(left + column * (right - left) / (led_column + 1));	//LED位置(横軸方向)
+	for (int row_index = 1; row_index <= led_row; row_index++)
+		position_y.push_back(top + row_index * (bottom - top) / (led_row + 1));			//LED位置(縦軸方向)
+	for (int column_index = 1; column_index <= led_column; column_index++)
+		position_x.push_back(left + column_index * (right - left) / (led_column + 1));	//LED位置(横軸方向)
 	color_matrix = std::vector<std::vector<unsigned int>>(led_row, std::vector<unsigned int>(led_column, color_outofrange));
 	/*LEDの配置*/
+	color_matrix = std::vector<std::vector<unsigned int>>(led_row, std::vector<unsigned int>(led_column, color_off));
+	/*LEDマトリクスの生成*/
 }
+
+
 
 void Billboard::Commit(unsigned long long led_matrix[], unsigned int color)
 {

@@ -8,6 +8,7 @@ StringDisplayFrame::StringDisplayFrame()
 	SetGraphMode(SCREENWIDTH_STRINGDISPLAY, SCREENHEIGHT_STRINGDISPLAY, COLORBITDEPTH);
 	SetDrawScreen(DX_SCREEN_FRONT);
 	SetFontSize(SCREENHEIGHT_STRINGDISPLAY / 12);
+	SetMouseDispFlag(FALSE);
 	string_id = 0;
 }
 
@@ -31,7 +32,7 @@ void StringDisplayFrame::MainLoop()
 			return;
 		billboard.Commit(stringinformation.led_status, GetColor(stringinformation.R, stringinformation.G, stringinformation.B));
 		billboard.Draw();
-		DrawFormatString(0, 0, GetColor(200, 200, 200), "ID: %03d", string_id + 1);
+		DrawFormatString(0, SCREENHEIGHT_STRINGDISPLAY / 12, GetColor(200, 200, 200), "ID: %03d / type:%c %s\nwidht: %2d | R: %3d G: %3d B: %3d", string_id + 1, stringinformation.type, stringinformation.string, stringinformation.width, stringinformation.R, stringinformation.G, stringinformation.B);
 		WaitKey();
 		if (CheckHitKey(KEY_INPUT_RETURN))
 			string_id++;

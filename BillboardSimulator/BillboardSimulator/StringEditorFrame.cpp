@@ -8,6 +8,7 @@ StringEditorFrame::StringEditorFrame()
 	SetGraphMode(SCREENWIDTH_STRINGEDITOR, SCREENHEIGHT_STRINGEDITOR, COLORBITDEPTH);
 	SetDrawScreen(DX_SCREEN_FRONT);
 	SetFontSize(SCREENHEIGHT_STRINGDISPLAY / 12);
+	SetMouseDispFlag(TRUE);
 }
 
 void StringEditorFrame::Start()

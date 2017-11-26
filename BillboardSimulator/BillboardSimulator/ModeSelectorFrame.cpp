@@ -17,6 +17,7 @@ ModeSelectorFrame::ModeSelectorFrame()
 	SetGraphMode(SCREENWIDTH_MAIN, SCREENHEIGHT_MAIN, COLORBITDEPTH);	//画面サイズ設定
 	SetDrawScreen(DX_SCREEN_FRONT);										//表画面描画
 	SetFontSize(SCREENHEIGHT_MAIN / 14);								//フォントサイズ設定
+	SetMouseDispFlag(TRUE);
 }
 
 

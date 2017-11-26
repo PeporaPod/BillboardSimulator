@@ -21,6 +21,7 @@ Timetable::~Timetable()
 
 void Timetable::InitAsID()
 {
+	LoadCSV(false);
 }
 
 void Timetable::InitAsString()
@@ -36,6 +37,9 @@ void Timetable::LoadCSV(bool stringmode)
 	if (stringmode) {
 		std::list<std::string> stringlist;
 		StringProjection(&file, stringlist);
+	}
+	else {
+
 	}
 }
 

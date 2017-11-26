@@ -15,6 +15,7 @@ SimulatorFrame::SimulatorFrame()
 	SetAlwaysRunFlag(TRUE);														//常時処理をオン
 	SetGraphMode(SCREENWIDTH_SIMULATOR, SCREENHEIGHT_SIMULATOR, COLORBITDEPTH);	//画面サイズ
 	SetDrawScreen(DX_SCREEN_BACK);												//裏画面描画
+	SetMouseDispFlag(FALSE);
 }
 
 
@@ -29,6 +30,8 @@ SimulatorFrame::SimulatorFrame()
 void SimulatorFrame::Start()
 {
 	billboard.Init();	//LEDマトリクスの初期化
+	timetable.Init(false);
+	stringfile.Init();
 	billboard.Draw();
 	WaitKey();
 }
