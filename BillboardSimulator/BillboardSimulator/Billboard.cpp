@@ -90,6 +90,13 @@ void Billboard::Init(int top, int bottom, int left, int right, int row, int colu
 
 
 
+//
+//	LEDマトリクスの点灯状態の反映を行うメソッド
+//
+//		LEDの点灯状態/点灯色を各LEDに反映していく
+//
+//
+//
 void Billboard::Commit(unsigned long long led_matrix[], unsigned int color)
 {
 	for (int row = 0; row < led_row; row++) {
@@ -104,6 +111,15 @@ void Billboard::Commit(unsigned long long led_matrix[], unsigned int color)
 	}
 }
 
+
+
+//
+//	描画メソッド
+//
+//		現在のLEDの点灯状態で画面への描画を行う
+//
+//
+//
 void Billboard::Draw()
 {
 	ClearDrawScreen();
