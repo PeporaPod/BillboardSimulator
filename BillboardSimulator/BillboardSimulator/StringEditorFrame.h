@@ -3,7 +3,7 @@
 #include "Header.h"
 #include "Billboard.h"
 #include "Timetable.h"
-#include "StringFile.h"
+#include "StringControler.h"
 class StringEditorFrame
 {
 private:

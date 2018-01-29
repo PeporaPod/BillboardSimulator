@@ -25,7 +25,7 @@
     <ClCompile Include="SimulatorFrame.cpp" />
     <ClCompile Include="StringDisplayFrame.cpp" />
     <ClCompile Include="StringEditorFrame.cpp" />
-    <ClCompile Include="StringFile.cpp" />
+    <ClCompile Include="StringControler.cpp" />
     <ClCompile Include="Timetable.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -37,7 +37,7 @@
     <ClInclude Include="SimulatorFrame.h" />
     <ClInclude Include="StringDisplayFrame.h" />
     <ClInclude Include="StringEditorFrame.h" />
-    <ClInclude Include="StringFile.h" />
+    <ClInclude Include="StringControler.h" />
     <ClInclude Include="Timetable.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

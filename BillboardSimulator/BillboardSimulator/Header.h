@@ -58,10 +58,12 @@ typedef struct TrainInformationAsString {	//文字列タイプ
 
 /*文字列情報*/
 typedef struct StringInformation {
-	char string[STRING_LENGTH] = { NULL };			//文字列
-	int width = LED_COLUMN;							//文字列幅
-	char type = '?';								//文字列種
-	unsigned __int8 R = 32, G = 32, B = 32;			//RGB色
-	unsigned long long led_status[LED_ROW] = { 0 };	//点灯表
+				std::string	str			= "Error";	//文字列
+				char		type		= '?';		//文字列種
+	unsigned	long long	led_map[16] = { NULL };	//LEDマップ
+	unsigned	__int8		width		= 0;		//LED使用幅
+	unsigned	__int8		R			= 32;		//赤色光度
+	unsigned	__int8		G			= 32;		//緑色光度
+	unsigned	__int8		B			= 32;		//青色光度
 }StringInformation;
 /*文字列情報*/

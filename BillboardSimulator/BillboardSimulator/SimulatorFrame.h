@@ -1,7 +1,7 @@
 #pragma once
 #include "Billboard.h"
 #include "Timetable.h"
-#include "StringFile.h"
+#include "StringControler.h"
 
 
 
@@ -24,7 +24,7 @@ class SimulatorFrame
 private:
 	Billboard billboard;	//LEDマトリクス
 	Timetable timetable;	//時刻表
-	StringFile stringfile;	//文字列情報
+	StringControler stringfile;	//文字列情報
 public:
 	SimulatorFrame();	//コンストラク
 	void Start();		//稼働開始メソッド

@@ -2,7 +2,7 @@
 #include <DxLib.h>
 #include "Billboard.h"
 #include "Timetable.h"
-#include "StringFile.h"
+#include "StringControler.h"
 
 
 
@@ -30,11 +30,12 @@ private:
 	/*基幹データ*/
 	Billboard			billboard;
 	Timetable			timetable;
-	StringFile			stringfile;
+	StringControler			stringfile;
 	/*基幹データ*/
 	/*表示中の文字列情報*/
 	int					string_id;
 	StringInformation	stringinformation;
+	int					size;
 	/*表示中の文字列情報*/
 public:
 	StringDisplayFrame();
