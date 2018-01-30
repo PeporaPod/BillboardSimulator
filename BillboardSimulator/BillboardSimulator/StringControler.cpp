@@ -31,7 +31,7 @@ int StringControler::Init()
 
 
 //
-//
+//	ID番号から文字列情報を返却
 //
 //
 StringInformation StringControler::GetStringInformation(int id)
@@ -46,25 +46,29 @@ StringInformation StringControler::GetStringInformation(int id)
 
 
 //
+//	表記文字列と文字列種から文字列情報を返却
 //
 //
-//
-StringInformation StringControler::GetStringInformation(std::string str)
+StringInformation StringControler::GetStringInformation(std::string str, char type)
 {
 	for (unsigned int i = 0; i < vecstrinfo.size(); i++)
-		if (vecstrinfo[i].str == str) return vecstrinfo[i];	//文字列が合致した
+		if (vecstrinfo[i].str == str && vecstrinfo[i].type == type) return vecstrinfo[i];	//文字列,文字列種が合致した
 	StringInformation strinfo;
-	return strinfo;
+	return strinfo;	//合致するものがデータ上になかった場合
 }
 
-//bool StringControler::GetStringInformation(StringInformation& stringinformation, int number)
-//{
-//	if ((unsigned int)number < stringvector.size()) {
-//		stringinformation = stringvector[number];
-//		return true;
-//	}
-//	return false;
-//}
+
+
+//
+//	表記文字列と文字列種からIDを返却
+//
+//
+int StringControler::GetStringID(std::string str, char type)
+{
+	for (unsigned int i = 0; i < vecstrinfo.size(); i++)
+		if (vecstrinfo[i].str == str && vecstrinfo[i].type == type) return i;	//文字列,文字列種が合致した
+	return -1;	//合致するデータがなかった場合
+}
 
 
 
@@ -82,6 +86,8 @@ StringControler::~StringControler()
 		file << number << " | " << vecstrinfo[i].type << ": " << vecstrinfo[i].str << std::endl;
 	}
 }
+
+
 
 
 

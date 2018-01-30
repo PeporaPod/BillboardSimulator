@@ -28,20 +28,19 @@ class StringDisplayFrame
 {
 private:
 	/*基幹データ*/
-	Billboard			billboard;
-	Timetable			timetable;
-	StringControler			stringfile;
+	Billboard			billboard;			//LEDマトリクス
+	StringControler		stringcontroler;	//文字列情報制御クラス
 	/*基幹データ*/
 	/*表示中の文字列情報*/
-	int					string_id;
-	StringInformation	stringinformation;
-	int					size;
+	int					size;				//表示可能な文字列の数
+	int					current_str_id;		//現在表示している文字列ID
+	StringInformation	current_strinfo;	//現在表示している文字列情報
 	/*表示中の文字列情報*/
 public:
-	StringDisplayFrame();
-	void Start();
-	~StringDisplayFrame();
+	StringDisplayFrame();	//コンストラクタ
+	void Start();			//実行開始メソッド
+	~StringDisplayFrame();	//デストラクタ
 private:
-	void MainLoop();
+	void MainLoop();		//主実行メソッド
 };
 

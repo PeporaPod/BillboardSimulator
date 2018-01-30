@@ -122,11 +122,11 @@ void Billboard::Commit(unsigned long long led_matrix[], unsigned int color)
 //
 void Billboard::Draw()
 {
-	ClearDrawScreen();
+//	ClearDrawScreen();
 	for (int row = 0; row < led_row; row++)
 		for (int column = 0; column < led_column; column++)
 			DrawCircle(position_x[column], position_y[row], radius, color_matrix[row][column]);
-	ScreenFlip();
+//	ScreenFlip();
 }
 
 

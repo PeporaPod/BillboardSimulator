@@ -24,7 +24,7 @@ class SimulatorFrame
 private:
 	Billboard billboard;	//LEDマトリクス
 	Timetable timetable;	//時刻表
-	StringControler stringfile;	//文字列情報
+	StringControler stringcontroler;	//文字列情報
 public:
 	SimulatorFrame();	//コンストラク
 	void Start();		//稼働開始メソッド

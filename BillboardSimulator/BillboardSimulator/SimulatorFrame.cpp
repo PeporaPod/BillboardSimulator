@@ -30,8 +30,8 @@ SimulatorFrame::SimulatorFrame()
 void SimulatorFrame::Start()
 {
 	billboard.Init();	//LEDマトリクスの初期化
+	stringcontroler.Init();
 	timetable.Init(false);
-	stringfile.Init();
 	billboard.Draw();
 	WaitKey();
 }
