@@ -111,15 +111,21 @@ void Billboard::Commit(unsigned long long led_matrix[], unsigned int color)
 	}
 }
 
-void Billboard::Commit(StringInformation strinfo)
+
+
+//
+//
+//
+//
+void Billboard::Commit(StringInformation strinfo, const int offset_row, const int offset_column)
 {
-	for (int row = 0; row < LED_ROW; row++) {
+	for (int row = 0; row < LED_ROW && row + offset_row < led_row; row++) {
 		unsigned long long operatorbit = 0x8000000000000000;
-		for (int column = 0; column < strinfo.width; column++) {
+		for (int column = 0; column < LED_COLUMN && column + offset_column < led_column; column++) {
 			if (strinfo.led_map[row] & operatorbit)
-				color_matrix[row][column] = GetColor(strinfo.R, strinfo.G, strinfo.B);
+				color_matrix[row + offset_row][column + offset_column] = GetColor(strinfo.R, strinfo.G, strinfo.B);
 			else
-				color_matrix[row][column] = color_off;
+				color_matrix[row + offset_row][column + offset_column] = color_off;
 			operatorbit >>= 1;
 		}
 	}

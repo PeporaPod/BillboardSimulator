@@ -55,6 +55,10 @@ TrainInformation TimetableControler::ProcessTrainInformation(std::list<std::stri
 	strlist.pop_front();
 	strlist.pop_front();
 	strlist.pop_front();
+	traininfo.departure_time = std::stoi(strlist.front());
+	strlist.pop_front();
+	traininfo.destination_id[0] = stringcontroler->GetStringID(strlist.front(), 'J');
+	traininfo.destination_id[1] = stringcontroler->GetStringID(strlist.front(), 'E');
 	return traininfo;
 }
 

@@ -18,18 +18,21 @@ StringControler::StringControler()
 //
 int StringControler::Init()
 {
-	if (!vecstrinfo.empty())
-		vecstrinfo.clear();
-	if (!error_file.empty())
-		error_file.clear();
-	for (int i = 1; true; i++) {
-		switch (LoadStringInformation(i)) {	//バイナリファイルから文字列情報を取得
-		case -1:
-			return i - 1;	//ファイルが不在の時ループから抜け終了
-		case 1:
-			error_file.push_back(i);
-		}
-	}
+	vecstrinfo.clear();	//再読み込み時のための初期化
+
+	//ファイルのロード
+	unsigned int file_id = 0;	//読み込むファイル番号
+	do if (!LoadStringInformation(++file_id)) break;	//ファイルの読み込み: 関数からエラーの返り値でループを脱出
+	while (true);
+
+	//数字用の別枠を初期化
+	char num[2] = "0";
+	for (int i = 0; i < 10; i++)
+		vecnumstrinfo[i] = GetStringInformation(num, 'N'), num[0]++;
+	num[0] = ':';
+	vecnumstrinfo[10] = GetStringInformation(num, 'N');
+
+	return file_id - 1;	//読み込んだファイル数を返却
 }
 
 
@@ -53,12 +56,25 @@ StringInformation StringControler::GetStringInformation(int id)
 //	表記文字列と文字列種から文字列情報を返却
 //
 //
-StringInformation StringControler::GetStringInformation(std::string str, char type)
+StringInformation StringControler::GetStringInformation(char * str, char type)
 {
 	for (unsigned int i = 0; i < vecstrinfo.size(); i++)
 		if (vecstrinfo[i].str == str && vecstrinfo[i].type == type) return vecstrinfo[i];	//文字列,文字列種が合致した
 	StringInformation strinfo;
 	return strinfo;	//合致するものがデータ上になかった場合
+}
+
+
+
+//
+//	数またはコロンから数字文字列を返却
+//
+//
+StringInformation StringControler::GetNumberStringInformation(int number)
+{
+	if (number < 0 || number > 10)
+		return StringInformation();
+	return vecnumstrinfo[number];
 }
 
 
@@ -86,7 +102,7 @@ StringControler::~StringControler()
 	if (!file.is_open()) return;
 	char number[4];
 	for (unsigned int i = 0; i < vecstrinfo.size(); i++) {
-		sprintf_s<sizeof(number)>(number, "%3d", i + 1);
+		sprintf_s<sizeof(number)>(number, "%03d", i + 1);
 		file << number << " | " << vecstrinfo[i].type << ": " << vecstrinfo[i].str << std::endl;
 	}
 }
@@ -99,16 +115,16 @@ StringControler::~StringControler()
 //	バイナリファイルから文字列情報を読み出す
 //
 //
-int StringControler::LoadStringInformation(const unsigned int file_id) {
+bool StringControler::LoadStringInformation(const unsigned int file_id) {
 	//数を文字に変換
-	if (file_id > 999) return -1; //ファイル番号は1-999までの間. 0は別の取り扱い.
+	if (file_id > 999) return false; //ファイル番号は1-999までの間. 0は別の取り扱い.
 	char file_name[8];	//文字列格納バッファ
 	sprintf_s<sizeof(file_name)>(file_name, "STR\\%03u", file_id);	//ファイル名は0パディングありの3桁
 
 
-																	//ファイルオープン
+	//ファイルオープン
 	std::ifstream file(file_name, std::fstream::binary);	//バイナリファイルとしてオープン
-	if (!file.is_open()) return -1; //読み込みループを終了させるための戻り値
+	if (!file.is_open()) return false; //読み込みループを終了させるための戻り値
 
 
 	//データロード
@@ -135,16 +151,10 @@ int StringControler::LoadStringInformation(const unsigned int file_id) {
 		strinfo.str.push_back(character);
 	} while (!file.eof());
 	strinfo.str.pop_back(); strinfo.str.pop_back();
-
-
-	//取得完了処理
-	vecstrinfo.push_back(strinfo);
-	return 0;	//読み取りを正常に完了
-
-				//中途エラー発生時の処理
 error_jump:
 	vecstrinfo.push_back(strinfo);
-	return 1;	//フォーマット非準拠ファイルの検出
+
+	return true;	//読み取りを終了
 }
 
 

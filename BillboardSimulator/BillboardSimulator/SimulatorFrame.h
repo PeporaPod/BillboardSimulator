@@ -30,5 +30,7 @@ public:
 	SimulatorFrame();	//コンストラク
 	void Start();		//稼働開始メソッド
 	~SimulatorFrame();	//デストラクタ
+private:
+	void MainLoop();
 };
 

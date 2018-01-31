@@ -54,6 +54,9 @@
     <ClCompile Include="TimetableControler.cpp">
       <Filter>ソース ファイル\Elements</Filter>
     </ClCompile>
+    <ClCompile Include="LineControler.cpp">
+      <Filter>ソース ファイル\Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrame.h">
@@ -81,6 +84,9 @@
       <Filter>ヘッダー ファイル\Elements</Filter>
     </ClInclude>
     <ClInclude Include="TimetableControler.h">
+      <Filter>ヘッダー ファイル\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="LineControler.h">
       <Filter>ヘッダー ファイル\Elements</Filter>
     </ClInclude>
   </ItemGroup>

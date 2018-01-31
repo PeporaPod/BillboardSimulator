@@ -18,7 +18,8 @@ public:
 	void Init();
 	void Init(int top, int bottom, int left, int right, int row, int column);
 	void Commit(unsigned long long led_matrix[], unsigned int color);
-	void Commit(StringInformation);
+//	void Commit(StringInformation);
+	void Commit(StringInformation, const int offset_row = 0, const int offset_column = 0);
 	void Draw();
 	void GetPositionReference(std::vector<int>* axis_x, std::vector<int>* axis_y, int* radius);
 	~Billboard();
