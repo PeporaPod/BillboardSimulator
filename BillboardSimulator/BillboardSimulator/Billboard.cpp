@@ -99,11 +99,25 @@ void Billboard::Init(int top, int bottom, int left, int right, int row, int colu
 //
 void Billboard::Commit(unsigned long long led_matrix[], unsigned int color)
 {
-	for (int row = 0; row < led_row; row++) {
+	for (int row = 0; row < LED_ROW; row++) {
 		unsigned long long operatorbit = 0x8000000000000000;
-		for (int column = 0; column < led_column; column++) {
+		for (int column = 0; column < LED_COLUMN; column++) {
 			if (led_matrix[row] & operatorbit)
 				color_matrix[row][column] = color;
+			else
+				color_matrix[row][column] = color_off;
+			operatorbit >>= 1;
+		}
+	}
+}
+
+void Billboard::Commit(StringInformation strinfo)
+{
+	for (int row = 0; row < LED_ROW; row++) {
+		unsigned long long operatorbit = 0x8000000000000000;
+		for (int column = 0; column < strinfo.width; column++) {
+			if (strinfo.led_map[row] & operatorbit)
+				color_matrix[row][column] = GetColor(strinfo.R, strinfo.G, strinfo.B);
 			else
 				color_matrix[row][column] = color_off;
 			operatorbit >>= 1;
@@ -128,6 +142,22 @@ void Billboard::Draw()
 			DrawCircle(position_x[column], position_y[row], radius, color_matrix[row][column]);
 //	ScreenFlip();
 }
+
+
+
+//
+//
+//
+//
+void Billboard::GetPositionReference(std::vector<int>* axis_x, std::vector<int>* axis_y, int* rad)
+{
+	for (unsigned int i = 0; i < position_x.size(); i++)
+		axis_x->push_back(position_x[i]);
+	for (unsigned int i = 0; i < position_y.size(); i++)
+		axis_y->push_back(position_y[i]);
+	*rad = radius;
+}
+
 
 
 Billboard::~Billboard()

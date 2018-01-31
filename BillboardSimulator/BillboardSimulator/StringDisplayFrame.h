@@ -1,7 +1,7 @@
 #pragma once
 #include <DxLib.h>
 #include "Billboard.h"
-#include "Timetable.h"
+#include "TimetableControler.h"
 #include "StringControler.h"
 
 

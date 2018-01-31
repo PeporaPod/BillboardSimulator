@@ -56,8 +56,9 @@ void StringDisplayFrame::MainLoop()
 		WaitKey();
 		if (CheckHitKey(KEY_INPUT_RETURN))
 			current_str_id++;
-		else if (CheckHitKey(KEY_INPUT_BACK))
+		else if (CheckHitKey(KEY_INPUT_BACK)) {
 			if (current_str_id > 0) current_str_id--;
+		}
 		else if (CheckHitKey(KEY_INPUT_ESCAPE))
 			return;
 	}

@@ -42,9 +42,9 @@ const int STRING_LENGTH					=   24;	//文字列長
 
 /*列車情報*/
 typedef struct TrainInformation {			//シミュレータ用
-	int line_id;								//路線ID
-	int type_id;								//種別ID
-	int destination_id;							//行先ID
+	int line_id = -1;							//路線ID
+	int type_id[2] = { -1, -1 };				//種別ID
+	int destination_id[2] = { -1, -1 };			//行先ID
 }TrainInformation;
 
 

@@ -30,9 +30,11 @@ SimulatorFrame::SimulatorFrame()
 void SimulatorFrame::Start()
 {
 	billboard.Init();	//LEDマトリクスの初期化
-	stringcontroler.Init();
-	timetable.Init(false);
+	stringcontroler.Init();	//文字列情報の初期化
+	if (!timetablecontroler.Init(stringcontroler)) return;	//時刻表情報の初期化
+	billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(0).type_id[0]));
 	billboard.Draw();
+	ScreenFlip();
 	WaitKey();
 }
 
