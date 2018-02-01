@@ -30,11 +30,11 @@
 //
 class MainFrame
 {
-	int					mode;				//モードID
-	ModeSelectorFrame*	modeselectorframe;	//モードセレクタ
-	SimulatorFrame*		simulatorframe;		//シミュレータ
-	StringDisplayFrame*	stringdisplayframe;	//文字列ディスプレイ
-	StringEditorFrame*	stringeditorframe;	//文字列エディタ
+	int						mode;				//モードID
+	ModeSelectorFrame	*	modeselectorframe;	//モードセレクタ
+	SimulatorFrame		*	simulatorframe;		//シミュレータ
+	StringDisplayFrame	*	stringdisplayframe;	//文字列ディスプレイ
+	StringEditorFrame	*	stringeditorframe;	//文字列エディタ
 public:
 	MainFrame();	//コンストラクタ
 	bool Start();	//稼働開始メソッド

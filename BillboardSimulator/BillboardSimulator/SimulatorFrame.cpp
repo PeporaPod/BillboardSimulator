@@ -15,7 +15,7 @@ SimulatorFrame::SimulatorFrame()
 	SetAlwaysRunFlag(TRUE);														//常時処理をオン
 	SetGraphMode(SCREENWIDTH_SIMULATOR, SCREENHEIGHT_SIMULATOR, COLORBITDEPTH);	//画面サイズ
 	SetDrawScreen(DX_SCREEN_BACK);												//裏画面描画
-	SetMouseDispFlag(FALSE);
+	SetMouseDispFlag(FALSE);													//マウス表示"なし"
 }
 
 
@@ -29,11 +29,11 @@ SimulatorFrame::SimulatorFrame()
 //
 void SimulatorFrame::Start()
 {
-	billboard.Init();	//LEDマトリクスの初期化
-	linecontroler.Init();	//路線情報の初期化
-	stringcontroler.Init();	//文字列情報の初期化
+	billboard.Init();														//LEDマトリクスの初期化
+	linecontroler.Init();													//路線情報の初期化
+	stringcontroler.Init();													//文字列情報の初期化
 	if (!timetablecontroler.Init(linecontroler, stringcontroler)) return;	//時刻表情報の初期化
-	MainLoop();
+	MainLoop();																//主処理メソッドへ制御を委譲
 }
 
 
@@ -47,6 +47,14 @@ SimulatorFrame::~SimulatorFrame()
 {
 }
 
+
+
+
+
+//
+//	主処理メソッド
+//
+//
 void SimulatorFrame::MainLoop()
 {
 	int update_time = GetNowCount();

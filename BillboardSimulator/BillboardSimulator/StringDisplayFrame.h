@@ -28,13 +28,14 @@ class StringDisplayFrame
 {
 private:
 	/*基幹データ*/
-	Billboard			billboard;			//LEDマトリクス
-	StringControler		stringcontroler;	//文字列情報制御クラス
+			Billboard			billboard;										//LEDマトリクス
+			StringControler		stringcontroler;								//文字列情報制御クラス
+			const	int			font_size = SCREENHEIGHT_STRINGDISPLAY / 12;	//フォントサイズ
 	/*基幹データ*/
 	/*表示中の文字列情報*/
-	int					size;				//表示可能な文字列の数
-	int					current_str_id;		//現在表示している文字列ID
-	StringInformation	current_strinfo;	//現在表示している文字列情報
+			int					str_vecsize;									//読み込んだな文字列の数
+			int					current_id;										//現在表示している文字列ID
+			StringInformation	current_strinfo;								//現在表示している文字列情報
 	/*表示中の文字列情報*/
 public:
 	StringDisplayFrame();	//コンストラクタ

@@ -18,6 +18,8 @@
 //
 class ModeSelectorFrame
 {
+private:
+	const int font_size = SCREENHEIGHT_MAIN / 14;
 public:
 	ModeSelectorFrame();	//コンストラクタ
 	int Start();			//稼働開始メソッド

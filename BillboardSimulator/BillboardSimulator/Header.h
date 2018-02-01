@@ -47,20 +47,20 @@ const int LED_COLUMN					=   64;	//文字列表示モード時列数
 
 /*路線情報*/
 typedef struct LineInformation {
-				std::string str		= "Error";
-	unsigned	__int8		R[2]	= { 255, 255 };
-	unsigned	__int8		G[2]	= { 255, 255 };
-	unsigned	__int8		B[2]	= { 255, 255 };
+				std::string str		= "Error";		//路線名
+	unsigned	__int8		R[2]	= { 255, 255 };	//路線カラー赤光度
+	unsigned	__int8		G[2]	= { 255, 255 };	//路線カラー緑光度
+	unsigned	__int8		B[2]	= { 255, 255 };	//路線カラー青光度
 }LineInformation;
 /*路線情報*/
 
 
 /*列車情報*/
-typedef struct TrainInformation {			//シミュレータ用
-	int line_id = -1;							//路線ID
-	int type_id[2] = { -1, -1 };				//種別ID
-	int departure_time = -1;					//発車時刻用の数字ID
-	int destination_id[2] = { -1, -1 };			//行先ID
+typedef struct TrainInformation {
+	int line_id				= -1;					//路線ID
+	int type_id[2]			= { -1, -1 };			//種別文字列ID
+	int departure_time		= -1;					//発車時刻(4桁の整数)
+	int destination_id[2]	= { -1, -1 };			//行先文字列ID
 }TrainInformation;
 /*列車情報*/
 
@@ -70,7 +70,7 @@ typedef struct StringInformation {
 				std::string	str			= "Error";	//文字列
 				char		type		= '?';		//文字列種
 	unsigned	long long	led_map[16] = { NULL };	//LEDマップ
-	unsigned	__int8		width		= 0;		//LED使用幅
+	unsigned	__int8		width		=  0;		//LED使用幅
 	unsigned	__int8		R			= 32;		//赤色光度
 	unsigned	__int8		G			= 32;		//緑色光度
 	unsigned	__int8		B			= 32;		//青色光度

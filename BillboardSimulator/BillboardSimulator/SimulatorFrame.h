@@ -23,16 +23,15 @@
 class SimulatorFrame
 {
 private:
-	Billboard billboard;	//LEDマトリクス
-	TimetableControler timetablecontroler;	//時刻表
-	StringControler stringcontroler;	//文字列情報
-	LineControler linecontroler;
-	TrainInformation traininformation;
+	Billboard			billboard;			//LEDマトリクス
+	LineControler		linecontroler;		//路線情報制御クラス
+	StringControler		stringcontroler;	//文字列情報
+	TimetableControler	timetablecontroler;	//時刻表
 public:
-	SimulatorFrame();	//コンストラク
+	SimulatorFrame();	//コンストラクタ
 	void Start();		//稼働開始メソッド
 	~SimulatorFrame();	//デストラクタ
 private:
-	void MainLoop();
+	void MainLoop();	//主処理メソッド
 };
 

@@ -1,4 +1,4 @@
-#include <DxLib.h>
+#include <Windows.h>
 #include "MainFrame.h"
 
 
@@ -14,7 +14,7 @@
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	MainFrame mainframe;	//メインフレームの構築
-	if (mainframe.Start())		//メインフレームの稼働開始
+	if (mainframe.Start())	//メインフレームの稼働開始
 		return 0;					//正常終了
 	else
 		return -1;					//異常終了

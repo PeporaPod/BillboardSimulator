@@ -8,27 +8,27 @@
 //
 StringEditorFrame::StringEditorFrame()
 {
-	SetAlwaysRunFlag(FALSE);
-	SetGraphMode(SCREENWIDTH_STRINGEDITOR, SCREENHEIGHT_STRINGEDITOR, COLORBITDEPTH);
-	SetDrawScreen(DX_SCREEN_FRONT);
-	SetFontSize(SCREENHEIGHT_STRINGDISPLAY / 12);
-	SetMouseDispFlag(TRUE);
-	current_id = 0;
-	cursor_row = 0;
-	cursor_column = 0;
+	SetAlwaysRunFlag(FALSE);															//バックグラウンド時は処理を停止
+	SetGraphMode(SCREENWIDTH_STRINGEDITOR, SCREENHEIGHT_STRINGEDITOR, COLORBITDEPTH);	//画面幅・画面高・色ビット深度を設定
+	SetDrawScreen(DX_SCREEN_FRONT);														//表画面描画
+	SetFontSize(font_size);																//フォントサイズ設定
+	SetMouseDispFlag(TRUE);																//マウスカーソル表示あり
 }
 
 
 
 //
-//
+//	実行開始メソッド
 //
 //
 void StringEditorFrame::Start()
 {
+	cursor_row = 0;																												//現在ターゲットしているカーソルの行を初期化
+	cursor_column = 0;																											//現在ターゲットしているカーソルの列を初期化
+	current_id = 0;																												//現在表示中の文字列IDを初期化
 	billboard.Init(SCREENHEIGHT_STRINGEDITOR / 2, SCREENHEIGHT_STRINGEDITOR, 0, SCREENWIDTH_STRINGEDITOR, LED_ROW, LED_COLUMN);	//LEDマトリクスの初期化
-	size = stringcontroler.Init();
-	MainLoop();
+	str_vecsize = stringcontroler.Init();																						//文字列情報の初期化,読み込んだ文字列数の取得
+	MainLoop();																													//主実行メソッドに処理を委譲
 }
 
 
@@ -46,7 +46,7 @@ StringEditorFrame::~StringEditorFrame()
 
 
 //
-//
+//	主実行メソッド
 //
 //
 void StringEditorFrame::MainLoop()
@@ -56,7 +56,7 @@ void StringEditorFrame::MainLoop()
 	int radius;
 	billboard.GetPositionReference(&position_x, &position_y, &radius);
 	current_strinfo = stringcontroler.GetStringInformation(current_id);
-	while (!ProcessMessage() && !ClearDrawScreen() && current_id < size) {
+	while (!ProcessMessage() && !ClearDrawScreen() && current_id < str_vecsize) {
 		billboard.Commit(current_strinfo.led_map, GetColor(current_strinfo.R, current_strinfo.G, current_strinfo.B));
 		billboard.Draw();
 		DrawFormatString(0, SCREENHEIGHT_STRINGDISPLAY / 12, GetColor(200, 200, 200), "ID: %03d / type:%c %s\nwidth: %2d | R: %3d G: %3d B: %3d", current_id + 1, current_strinfo.type, current_strinfo.str.c_str(), current_strinfo.width, current_strinfo.R, current_strinfo.G, current_strinfo.B);
@@ -110,17 +110,39 @@ void StringEditorFrame::MainLoop()
 			}
 			clsDx();
 		}
+		else if (CheckHitKey(KEY_INPUT_COLON))
+			EditMode();
 	}
 }
 
 
 
 //
+//	文字列情報編集モード
 //
+//
+void StringEditorFrame::EditMode()
+{
+	ClearDrawScreen();
+	DrawString(0, (int)(0.5 * font_size), "編集モード", GetColor(200, 200, 200));
+	WaitTimer(2000);
+
+	std::vector<int> position_x;
+	std::vector<int> position_y;
+	int radius;
+	billboard.GetPositionReference(&position_x, &position_y, &radius);
+}
+
+
+
+//
+//	編集内容の上書きメソッド
 //
 //
 void StringEditorFrame::OverWrite(StringInformation rewrite_strinfo, unsigned int current_id)
 {
+	cursor_row = 0;																												//現在ターゲットしているカーソルの行を初期化
+	cursor_column = 0;																											//現在ターゲットしているカーソルの列を初期化
 	char filepath[8];
 	sprintf_s<sizeof(filepath)>(filepath, "STR\\%03u", current_id + 1);
 	std::ofstream file(filepath, std::fstream::binary);
