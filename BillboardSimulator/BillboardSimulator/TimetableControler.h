@@ -1,20 +1,17 @@
 #pragma once
 #include "Header.h"
-#include <fstream>
-#include <sstream>
-#include <list>
-#include <vector>
+#include "LineControler.h"
 #include "StringControler.h"
 class TimetableControler {
 private:
 	std::vector<TrainInformation> timetable;
 public:
 	TimetableControler();
-	bool Init(StringControler stringcontroler);
+	bool Init(LineControler, StringControler);
 	TrainInformation GetTrainInformation(int id);
 	~TimetableControler();
 private:
-	TrainInformation ProcessTrainInformation(std::list<std::string> strlist, StringControler* stringcontroler);
+	TrainInformation ProcessTrainInformation(std::list<std::string> strlist, LineControler*, StringControler*);
 };
 //class Timetable
 //{

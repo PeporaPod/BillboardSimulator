@@ -45,6 +45,16 @@ const int LED_COLUMN					=   64;	//文字列表示モード時列数
 //
 //
 
+/*路線情報*/
+typedef struct LineInformation {
+				std::string str		= "Error";
+	unsigned	__int8		R[2]	= { 255, 255 };
+	unsigned	__int8		G[2]	= { 255, 255 };
+	unsigned	__int8		B[2]	= { 255, 255 };
+}LineInformation;
+/*路線情報*/
+
+
 /*列車情報*/
 typedef struct TrainInformation {			//シミュレータ用
 	int line_id = -1;							//路線ID
@@ -52,13 +62,6 @@ typedef struct TrainInformation {			//シミュレータ用
 	int departure_time = -1;					//発車時刻用の数字ID
 	int destination_id[2] = { -1, -1 };			//行先ID
 }TrainInformation;
-
-
-typedef struct TrainInformationAsString {	//文字列タイプ
-	std::vector<std::string> line;				//路線名
-	std::vector<std::string> type;				//種別名
-	std::vector<std::string> destination;		//行先
-}TrainInformationAsString;
 /*列車情報*/
 
 

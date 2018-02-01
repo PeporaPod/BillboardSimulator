@@ -2,6 +2,7 @@
 #include "Billboard.h"
 #include "TimetableControler.h"
 #include "StringControler.h"
+#include "LineControler.h"
 
 
 
@@ -25,6 +26,7 @@ private:
 	Billboard billboard;	//LEDマトリクス
 	TimetableControler timetablecontroler;	//時刻表
 	StringControler stringcontroler;	//文字列情報
+	LineControler linecontroler;
 	TrainInformation traininformation;
 public:
 	SimulatorFrame();	//コンストラク

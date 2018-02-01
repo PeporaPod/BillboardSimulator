@@ -33,8 +33,8 @@ void Billboard::Init()
 	
 	
 	/*配置できるLEDの数を計算する*/
-	led_row = screenheight / (radius + 1) - 1;			//行数
-	led_column = screenwidth / (radius + 1) - 1;		//列数
+	led_row = screenheight / (2 * (radius + 1)) - 1;			//行数
+	led_column = screenwidth / (2 * (radius + 1)) - 1;		//列数
 	/*配置できるLEDの数を計算する*/
 
 
@@ -129,6 +129,16 @@ void Billboard::Commit(StringInformation strinfo, const int offset_row, const in
 			operatorbit >>= 1;
 		}
 	}
+}
+
+void Billboard::Commit(LineInformation lineinformation, const int offset_row, const int offset_column)
+{
+	for (int i = 1; i < 8 && i + offset_row < led_row; i++)
+		for (int j = 0; j < 4; j++)
+			color_matrix[i + offset_row][j] = color_matrix[i + offset_row][led_column - j - 1] = GetColor(lineinformation.R[0], lineinformation.G[0], lineinformation.B[0]);
+	for (int i = 8; i < 15 && i + offset_row < led_row; i++)
+		for (int j = 0; j < 4; j++)
+			color_matrix[i + offset_row][j] = color_matrix[i + offset_row][led_column - j - 1] = GetColor(lineinformation.R[1], lineinformation.G[1], lineinformation.B[1]);
 }
 
 

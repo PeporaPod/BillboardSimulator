@@ -8,7 +8,7 @@ TimetableControler::TimetableControler()
 
 
 
-bool TimetableControler::Init(StringControler stringcontroler)
+bool TimetableControler::Init(LineControler linecontroler, StringControler stringcontroler)
 {
 	std::ifstream file("TT\\êVèhâw.csv");
 	if (!file.is_open()) return false;
@@ -23,7 +23,7 @@ bool TimetableControler::Init(StringControler stringcontroler)
 			std::getline(strstream, str, ',');
 			strlist.push_back(str);
 		}
-		timetable.push_back(ProcessTrainInformation(strlist, &stringcontroler));
+		timetable.push_back(ProcessTrainInformation(strlist, &linecontroler, &stringcontroler));
 	}
 	return true;
 }
@@ -45,10 +45,11 @@ TimetableControler::~TimetableControler()
 
 
 
-TrainInformation TimetableControler::ProcessTrainInformation(std::list<std::string> strlist, StringControler* stringcontroler)
+TrainInformation TimetableControler::ProcessTrainInformation(std::list<std::string> strlist, LineControler* linecontroler, StringControler* stringcontroler)
 {
 	TrainInformation traininfo;
 	if (strlist.size() != 9) return traininfo;
+	traininfo.line_id = linecontroler->GetLineID(strlist.front());
 	strlist.pop_front();
 	traininfo.type_id[0] = stringcontroler->GetStringID(strlist.front(), 'J');
 	traininfo.type_id[1] = stringcontroler->GetStringID(strlist.front(), 'E');
