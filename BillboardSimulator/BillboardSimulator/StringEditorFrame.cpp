@@ -10,7 +10,7 @@ StringEditorFrame::StringEditorFrame()
 {
 	SetAlwaysRunFlag(FALSE);															//バックグラウンド時は処理を停止
 	SetGraphMode(SCREENWIDTH_STRINGEDITOR, SCREENHEIGHT_STRINGEDITOR, COLORBITDEPTH);	//画面幅・画面高・色ビット深度を設定
-	SetDrawScreen(DX_SCREEN_FRONT);														//表画面描画
+	SetDrawScreen(DX_SCREEN_BACK);														//裏画面描画
 	SetFontSize(font_size);																//フォントサイズ設定
 	SetMouseDispFlag(TRUE);																//マウスカーソル表示あり
 }
@@ -23,8 +23,6 @@ StringEditorFrame::StringEditorFrame()
 //
 void StringEditorFrame::Start()
 {
-	cursor_row = 0;																												//現在ターゲットしているカーソルの行を初期化
-	cursor_column = 0;																											//現在ターゲットしているカーソルの列を初期化
 	current_id = 0;																												//現在表示中の文字列IDを初期化
 	billboard.Init(SCREENHEIGHT_STRINGEDITOR / 2, SCREENHEIGHT_STRINGEDITOR, 0, SCREENWIDTH_STRINGEDITOR, LED_ROW, LED_COLUMN);	//LEDマトリクスの初期化
 	str_vecsize = stringcontroler.Init();																						//文字列情報の初期化,読み込んだ文字列数の取得
@@ -51,25 +49,75 @@ StringEditorFrame::~StringEditorFrame()
 //
 void StringEditorFrame::MainLoop()
 {
+	while (!ProcessMessage() && current_id < str_vecsize) {
+		StringInformation current_strinfo = stringcontroler.GetStringInformation(current_id);	//文字列情報の取得
+
+		/*描画処理*/
+			//裏画面の初期化
+		ClearDrawScreen();
+		//情報の描画
+		DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth: %02d | R: %03u G: %03u B: %03u", current_id + 1, current_strinfo.type, current_strinfo.str.c_str(), current_strinfo.width, current_strinfo.R, current_strinfo.G, current_strinfo.B);
+		//LEDマトリクスへマッピングを反映
+		billboard.Commit(current_strinfo.led_map, GetColor(current_strinfo.R, current_strinfo.G, current_strinfo.B));
+		//LEDマトリクスの描画
+		billboard.Draw();
+		//画面のフリッピング
+		ScreenFlip();
+		/*描画処理*/
+
+		/*ユーザ操作*/
+		WaitKey();	//キー入力待ち
+		if (CheckHitKey(KEY_INPUT_RETURN))							//次の文字へ
+			current_id++;
+		else if (CheckHitKey(KEY_INPUT_BACK) && current_id > 0)		//前の文字へ
+			current_id--;
+		else if (CheckHitKey(KEY_INPUT_HOME))						//先頭の文字へ
+			current_id = 0;
+		else if (CheckHitKey(KEY_INPUT_END))						//末尾の文字へ
+			current_id = str_vecsize - 1;
+		else if (CheckHitKey(KEY_INPUT_PGDN))						//10個前の文字へ移動
+			if (current_id > 9)	current_id -= 10;
+			else current_id = 0;
+		else if (CheckHitKey(KEY_INPUT_PGUP))						//10個後の文字へ移動
+			if (current_id < str_vecsize - 10)	current_id += 10;
+			else current_id = str_vecsize - 1;
+		else if (CheckHitKey(KEY_INPUT_E))							//現在表示中の文字列の編集を開始
+			EditorMode(current_strinfo, current_id);
+		else if (CheckHitKey(KEY_INPUT_N))							//新規文字列の追加を開始
+			EditorMode(StringInformation(), str_vecsize);
+		else if (CheckHitKey(KEY_INPUT_ESCAPE))						//終了
+			return;
+		/*ユーザ操作*/
+	}
+}
+
+
+
+//
+//	文字列情報編集モード
+//
+//
+void StringEditorFrame::EditorMode(StringInformation strinfo, unsigned int register_id)
+{
+	ClearDrawScreen();
+	DrawString(0, (int)(0.5 * font_size), "編集モード", GetColor(200, 200, 200));
+	ScreenFlip();
+	WaitTimer(1000);
+
+	int cursor_row = 0;																												//現在ターゲットしているカーソルの行を初期化
+	int cursor_column = 0;																											//現在ターゲットしているカーソルの列を初期化
 	std::vector<int> position_x;
 	std::vector<int> position_y;
 	int radius;
 	billboard.GetPositionReference(&position_x, &position_y, &radius);
-	current_strinfo = stringcontroler.GetStringInformation(current_id);
-	while (!ProcessMessage() && !ClearDrawScreen() && current_id < str_vecsize) {
-		billboard.Commit(current_strinfo.led_map, GetColor(current_strinfo.R, current_strinfo.G, current_strinfo.B));
+	while (!ProcessMessage() && !ClearDrawScreen()) {
+		DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth: %02d | R: %03u G: %03u B: %03u", register_id + 1, strinfo.type, strinfo.str.c_str(), strinfo.width, strinfo.R, strinfo.G, strinfo.B);
+		billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
 		billboard.Draw();
-		DrawFormatString(0, SCREENHEIGHT_STRINGDISPLAY / 12, GetColor(200, 200, 200), "ID: %03d / type:%c %s\nwidth: %2d | R: %3d G: %3d B: %3d", current_id + 1, current_strinfo.type, current_strinfo.str.c_str(), current_strinfo.width, current_strinfo.R, current_strinfo.G, current_strinfo.B);
 		DrawLine(position_x[cursor_column] - radius, position_y[cursor_row] + radius, position_x[cursor_column] + radius, position_y[cursor_row] + radius, GetColor(255, 255, 255));
 		ScreenFlip();
 		WaitKey();
-		if (CheckHitKey(KEY_INPUT_END))
-			current_strinfo = stringcontroler.GetStringInformation(++current_id);
-		else if (CheckHitKey(KEY_INPUT_HOME) && current_id > 0)
-			current_strinfo = stringcontroler.GetStringInformation(--current_id);
-		else if (CheckHitKey(KEY_INPUT_ESCAPE))
-			return;
-		else if (CheckHitKey(KEY_INPUT_UP) && cursor_row > 0)
+		if		(CheckHitKey(KEY_INPUT_UP) && cursor_row > 0)
 			cursor_row--;
 		else if (CheckHitKey(KEY_INPUT_DOWN) && cursor_row < LED_ROW - 1)
 			cursor_row++;
@@ -80,57 +128,81 @@ void StringEditorFrame::MainLoop()
 		else if (CheckHitKey(KEY_INPUT_RETURN)) {
 			unsigned long long operatorbit = 0x8000000000000000;
 			operatorbit >>= cursor_column;
-			current_strinfo.led_map[cursor_row] ^= operatorbit;
+			strinfo.led_map[cursor_row] ^= operatorbit;
 		}
 		else if (CheckHitKey(KEY_INPUT_J))
-			current_strinfo.type = 'J';
+			strinfo.type = 'J';
 		else if (CheckHitKey(KEY_INPUT_E))
-			current_strinfo.type = 'E';
+			strinfo.type = 'E';
 		else if (CheckHitKey(KEY_INPUT_S))
-			current_strinfo.type = 'S';
+			strinfo.type = 'S';
 		else if (CheckHitKey(KEY_INPUT_N))
-			current_strinfo.type = 'N';
-		else if (CheckHitKey(KEY_INPUT_SPACE)) {
-			printfDx("OverWrite?[Return or Not]");
+			strinfo.type = 'N';
+		else if (CheckHitKey(KEY_INPUT_T)) {
+			ClearDrawScreen();
+			DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c /\nwidth: %02d | R: %03u G: %03u B: %03u", register_id + 1, strinfo.type, strinfo.width, strinfo.R, strinfo.G, strinfo.B);
+			billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
+			billboard.Draw();
+			ScreenFlip();
+			char str[64];
+			if (KeyInputString(GetDrawFormatStringWidth("ID:%03d / type:%c / ", register_id + 1, strinfo.type), (int)(0.5 * font_size), 63, str, TRUE) == 1)
+				strinfo.str = str;
+		}
+		else if (CheckHitKey(KEY_INPUT_W)) {
+			ClearDrawScreen();
+			DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth:", register_id + 1, strinfo.type, strinfo.str.c_str());
+			DrawFormatString(GetDrawFormatStringWidth("width: %02d | ", strinfo.width), (int)(2.5 * font_size), GetColor(200, 200, 200), "R: %03u G: %03u B: %03u", strinfo.R, strinfo.G, strinfo.B);
+			billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
+			billboard.Draw();
+			ScreenFlip();
+			strinfo.width = KeyInputNumber(GetDrawFormatStringWidth("width: "), (int)(2.5 * font_size), 64, 0, FALSE);
+		}
+		else if (CheckHitKey(KEY_INPUT_R)) {
+			ClearDrawScreen();
+			DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth: %02d | R:", register_id + 1, strinfo.type, strinfo.str.c_str(), strinfo.width);
+			DrawFormatString(GetDrawFormatStringWidth("width: %02d | R: %03u ", strinfo.width, strinfo.R), (int)(2.5 * font_size), GetColor(200, 200, 200), "G: %03u B: %03u", strinfo.G, strinfo.B);
+			billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
+			billboard.Draw();
+			ScreenFlip();
+			strinfo.R = KeyInputNumber(GetDrawFormatStringWidth("width: %02d | R: ", strinfo.width), (int)(2.5 * font_size), 255, 0, FALSE);
+		}
+		else if (CheckHitKey(KEY_INPUT_G)) {
+			ClearDrawScreen();
+			DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth: %02d | R: %03u G:", register_id + 1, strinfo.type, strinfo.str.c_str(), strinfo.width, strinfo.R);
+			DrawFormatString(GetDrawFormatStringWidth("width: %02d | R: %03u G: %03u ", strinfo.width, strinfo.R, strinfo.G), (int)(2.5 * font_size), GetColor(200, 200, 200), "B: %03u", strinfo.B);
+			billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
+			billboard.Draw();
+			ScreenFlip();
+			strinfo.G = KeyInputNumber(GetDrawFormatStringWidth("width: %02d | R: %03u G: ", strinfo.width, strinfo.R), (int)(2.5 * font_size), 255, 0, FALSE);
+		}
+		else if (CheckHitKey(KEY_INPUT_B)) {
+			ClearDrawScreen();
+			DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth: %02d | R: %03u G: %03u B:", register_id + 1, strinfo.type, strinfo.str.c_str(), strinfo.width, strinfo.R, strinfo.G);
+			billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
+			billboard.Draw();
+			ScreenFlip();
+			strinfo.B = KeyInputNumber(GetDrawFormatStringWidth("width: %02d | R: %03u G: %03u B: ", strinfo.width, strinfo.R, strinfo.G), (int)(2.5 * font_size), 255, 0, FALSE);
+		}
+		if (CheckHitKey(KEY_INPUT_ESCAPE)) {
+			ClearDrawScreen();
+			DrawString(0, (int)(0.5 * font_size), "編集内容を破棄します[再度ESCで確定]", GetColor(200, 200, 200));
+			ScreenFlip();
+			WaitKey();
+			if (CheckHitKey(KEY_INPUT_ESCAPE))
+				return;
+		}
+		if (CheckHitKey(KEY_INPUT_SPACE)) {
+			ClearDrawScreen();
+			DrawString(0, (int)(0.5 * font_size), "編集内容を上書きします[ENTERで確定]", GetColor(200, 200, 200));
+			ScreenFlip();
 			WaitKey();
 			if (CheckHitKey(KEY_INPUT_RETURN)) {
-				OverWrite(current_strinfo, current_id);//上書き用関数
-				stringcontroler.Init();
+				OverWrite(strinfo, register_id);
+				str_vecsize = stringcontroler.Init();
+				return;
 			}
-			ClearDrawScreen();
-			clsDx();
 		}
-		else if (CheckHitKey(KEY_INPUT_T)) {
-			printfDx("StringEdit[T or Not]");
-			WaitKey();
-			if (CheckHitKey(KEY_INPUT_T)) {
-				char str[64];
-				if (KeyInputString(600, 50, 63, str, TRUE) == 1)
-					current_strinfo.str = str;
-			}
-			clsDx();
-		}
-		else if (CheckHitKey(KEY_INPUT_COLON))
-			EditMode();
 	}
-}
-
-
-
-//
-//	文字列情報編集モード
-//
-//
-void StringEditorFrame::EditMode()
-{
-	ClearDrawScreen();
-	DrawString(0, (int)(0.5 * font_size), "編集モード", GetColor(200, 200, 200));
-	WaitTimer(2000);
-
-	std::vector<int> position_x;
-	std::vector<int> position_y;
-	int radius;
-	billboard.GetPositionReference(&position_x, &position_y, &radius);
 }
 
 
@@ -141,8 +213,6 @@ void StringEditorFrame::EditMode()
 //
 void StringEditorFrame::OverWrite(StringInformation rewrite_strinfo, unsigned int current_id)
 {
-	cursor_row = 0;																												//現在ターゲットしているカーソルの行を初期化
-	cursor_column = 0;																											//現在ターゲットしているカーソルの列を初期化
 	char filepath[8];
 	sprintf_s<sizeof(filepath)>(filepath, "STR\\%03u", current_id + 1);
 	std::ofstream file(filepath, std::fstream::binary);
