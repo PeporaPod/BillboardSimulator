@@ -125,11 +125,6 @@ void StringEditorFrame::EditorMode(StringInformation strinfo, unsigned int regis
 			cursor_column--;
 		else if (CheckHitKey(KEY_INPUT_RIGHT) && cursor_column < LED_COLUMN - 1)
 			cursor_column++;
-		else if (CheckHitKey(KEY_INPUT_RETURN)) {
-			unsigned long long operatorbit = 0x8000000000000000;
-			operatorbit >>= cursor_column;
-			strinfo.led_map[cursor_row] ^= operatorbit;
-		}
 		else if (CheckHitKey(KEY_INPUT_J))
 			strinfo.type = 'J';
 		else if (CheckHitKey(KEY_INPUT_E))
@@ -138,6 +133,40 @@ void StringEditorFrame::EditorMode(StringInformation strinfo, unsigned int regis
 			strinfo.type = 'S';
 		else if (CheckHitKey(KEY_INPUT_N))
 			strinfo.type = 'N';
+		else if (CheckHitKey(KEY_INPUT_INSERT)) {
+			unsigned long long operatorbit = 0xffffffffffffffff;
+			operatorbit >>= cursor_column + 1;
+			for (int i = 0; i < LED_ROW; i++)
+				strinfo.led_map[i] = (strinfo.led_map[i] >> 1 & operatorbit) | (~operatorbit << 1 & strinfo.led_map[i]);
+		}
+		else if (CheckHitKey(KEY_INPUT_DELETE)) {
+			unsigned long long operatorbit = 0xffffffffffffffff;
+			operatorbit >>= cursor_column;
+			for (int i = 0; i < LED_ROW; i++)
+				strinfo.led_map[i] = (strinfo.led_map[i] << 1 & operatorbit) | (~operatorbit & strinfo.led_map[i]);
+		}
+		else if (CheckHitKey(KEY_INPUT_RETURN)) {
+			unsigned long long operatorbit = 0x8000000000000000;
+			operatorbit >>= cursor_column;
+			strinfo.led_map[cursor_row] ^= operatorbit;
+		}
+		else if (GetMouseInput() == MOUSE_INPUT_LEFT) {
+			int mouse_x, mouse_y;
+			int row = -1, column = -1;
+			GetMousePoint(&mouse_x, &mouse_y);
+			for (unsigned int i = 0; i < position_y.size(); i++)
+				if ((mouse_y - position_y[i]) * (mouse_y - position_y[i]) < (radius + 1) * (radius + 1))
+					row = i;
+			for (unsigned int i = 0; i < position_x.size(); i++)
+				if ((mouse_x - position_x[i]) * (mouse_x - position_x[i]) < (radius + 1) * (radius + 1))
+					column = i;
+			if (row != -1 && column != -1) {
+				cursor_row = row, cursor_column = column;
+				unsigned long long operatorbit = 0x8000000000000000;
+				operatorbit >>= cursor_column;
+				strinfo.led_map[cursor_row] ^= operatorbit;
+			}
+		}
 		else if (CheckHitKey(KEY_INPUT_T)) {
 			ClearDrawScreen();
 			DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c /\nwidth: %02d | R: %03u G: %03u B: %03u", register_id + 1, strinfo.type, strinfo.width, strinfo.R, strinfo.G, strinfo.B);

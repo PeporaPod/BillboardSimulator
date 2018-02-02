@@ -12,7 +12,9 @@
 //
 MainFrame::MainFrame()
 {
+#ifndef FULL_SCREEN
 	ChangeWindowMode(TRUE);							//ウィンドウモード
+#endif
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_8X8);	//アンチエイリアスフォント
 	ChangeFont("Yu Gothic");						//フォント: Yu Gothic
 	SetFontThickness(4);							//フォントの太さ

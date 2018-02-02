@@ -49,7 +49,9 @@ TrainInformation TimetableControler::ProcessTrainInformation(std::list<std::stri
 {
 	TrainInformation traininfo;
 	if (strlist.size() != 9) return traininfo;
-	traininfo.line_id = linecontroler->GetLineID(strlist.front());
+	traininfo.line_color_id = linecontroler->GetLineID(strlist.front());
+	traininfo.line_str_id[0] = stringcontroler->GetStringID(strlist.front(), 'J');
+	traininfo.line_str_id[1] = stringcontroler->GetStringID(strlist.front(), 'E');
 	strlist.pop_front();
 	traininfo.type_id[0] = stringcontroler->GetStringID(strlist.front(), 'J');
 	traininfo.type_id[1] = stringcontroler->GetStringID(strlist.front(), 'E');

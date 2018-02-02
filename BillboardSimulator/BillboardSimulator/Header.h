@@ -11,6 +11,12 @@
 
 
 
+//#define FULL_SCREEN
+
+
+
+
+
 //
 //	定数定義
 //
@@ -18,15 +24,27 @@
 //
 
 /*画面表示関連*/
-const int SCREENWIDTH_MAIN				=  640;	//通常時画面幅
-const int SCREENHEIGHT_MAIN				=  480;	//通常時画面高
-const int SCREENWIDTH_SIMULATOR			= 1600;	//シミュレータ画面幅
-const int SCREENHEIGHT_SIMULATOR		=  800;	//シミュレータ画面高
-const int SCREENWIDTH_STRINGDISPLAY		= 1500;	//文字列ディスプレイモード画面幅
-const int SCREENHEIGHT_STRINGDISPLAY	=  600;	//文字列ディスプレイモード画面高
-const int SCREENWIDTH_STRINGEDITOR		= 1600;	//文字列エディタ画面幅
-const int SCREENHEIGHT_STRINGEDITOR		=  800;	//文字列エディタ画面高
-const int COLORBITDEPTH					=   32;	//色ビット深度
+#ifdef FULL_SCREEN
+const int SCREENWIDTH_MAIN = 1920;	//通常時画面幅
+const int SCREENHEIGHT_MAIN = 1080;	//通常時画面高
+const int SCREENWIDTH_SIMULATOR = 1920;	//シミュレータ画面幅
+const int SCREENHEIGHT_SIMULATOR = 1080;	//シミュレータ画面高
+const int SCREENWIDTH_STRINGDISPLAY = 1920;	//文字列ディスプレイモード画面幅
+const int SCREENHEIGHT_STRINGDISPLAY = 1080;	//文字列ディスプレイモード画面高
+const int SCREENWIDTH_STRINGEDITOR = 1920;	//文字列エディタ画面幅
+const int SCREENHEIGHT_STRINGEDITOR = 1080;	//文字列エディタ画面高
+const int COLORBITDEPTH = 32;	//色ビット深度
+#else
+const int SCREENWIDTH_MAIN = 640;	//通常時画面幅
+const int SCREENHEIGHT_MAIN = 480;	//通常時画面高
+const int SCREENWIDTH_SIMULATOR = 1600;	//シミュレータ画面幅
+const int SCREENHEIGHT_SIMULATOR = 800;	//シミュレータ画面高
+const int SCREENWIDTH_STRINGDISPLAY = 1500;	//文字列ディスプレイモード画面幅
+const int SCREENHEIGHT_STRINGDISPLAY = 600;	//文字列ディスプレイモード画面高
+const int SCREENWIDTH_STRINGEDITOR = 1600;	//文字列エディタ画面幅
+const int SCREENHEIGHT_STRINGEDITOR = 800;	//文字列エディタ画面高
+const int COLORBITDEPTH = 32;	//色ビット深度
+#endif
 /*画面表示関連*/
 
 /*表示要素関連*/
@@ -57,7 +75,8 @@ typedef struct LineInformation {
 
 /*列車情報*/
 typedef struct TrainInformation {
-	int line_id				= -1;					//路線ID
+	int line_color_id		= -1;					//路線カラーID
+	int line_str_id[2]		= { -1, -1 };			//路線文字列ID
 	int type_id[2]			= { -1, -1 };			//種別文字列ID
 	int departure_time		= -1;					//発車時刻(4桁の整数)
 	int destination_id[2]	= { -1, -1 };			//行先文字列ID

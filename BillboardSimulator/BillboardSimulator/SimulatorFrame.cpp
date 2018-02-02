@@ -57,6 +57,9 @@ SimulatorFrame::~SimulatorFrame()
 //
 void SimulatorFrame::MainLoop()
 {
+	std::vector<int> position_x, position_y;
+	int radius;
+	billboard.GetPositionReference(&position_x, &position_y, &radius);
 	int update_time = GetNowCount();
 	int engtrig = 0;
 	DATEDATA datedata;
@@ -68,16 +71,17 @@ void SimulatorFrame::MainLoop()
 			engtrig = engtrig ? 0 : 1;
 		}
 		while (timetablecontroler.GetTrainInformation(++id).departure_time <= datedata.Hour * 100 + datedata.Min);
-		for (int i = 0; i < 8; i++) {
-			billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(id + i).type_id[engtrig]), 16 * i, 5);
-			billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(id + i).destination_id[engtrig]), 16 * i, 53);
+		for (unsigned int i = 0; i < position_y.size() / 16; i++) {
+			billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(id + i).line_str_id[engtrig]), 16 * i, 5);
+			billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(id + i).type_id[engtrig]), 16 * i, 42);
+			billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(id + i).destination_id[engtrig]), 16 * i, 80);
 			if (timetablecontroler.GetTrainInformation(id + i).departure_time % 2400 / 1000)
-				billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 2400 / 1000), 16 * i, 117);
-			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 2400 / 100 % 10), 16 * i, 129);
-			billboard.Commit(stringcontroler.GetNumberStringInformation(10), 16 * i, 141);
-			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time / 10 % 10), 16 * i, 144);
-			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 10), 16 * i, 156);
-			billboard.Commit(linecontroler.GetLineInformation(timetablecontroler.GetTrainInformation(id + i).line_id), 16 * i);
+				billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 2400 / 1000), 16 * i, 154);
+			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 2400 / 100 % 10), 16 * i, 166);
+			billboard.Commit(stringcontroler.GetNumberStringInformation(10), 16 * i, 178);
+			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time / 10 % 10), 16 * i, 181);
+			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 10), 16 * i, 193);
+			billboard.Commit(linecontroler.GetLineInformation(timetablecontroler.GetTrainInformation(id + i).line_color_id), 16 * i);
 		}
 		billboard.Draw();
 		ScreenFlip();

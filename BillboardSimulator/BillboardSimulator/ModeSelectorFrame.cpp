@@ -57,4 +57,5 @@ int ModeSelectorFrame::Start()
 //
 ModeSelectorFrame::~ModeSelectorFrame()
 {
+	ClearDrawScreen();
 }
