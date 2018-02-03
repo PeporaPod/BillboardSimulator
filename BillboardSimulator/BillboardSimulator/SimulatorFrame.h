@@ -1,8 +1,8 @@
 #pragma once
 #include "Billboard.h"
-#include "TimetableControler.h"
-#include "StringControler.h"
 #include "LineControler.h"
+#include "StringControler.h"
+#include "TimetableControler.h"
 
 
 
@@ -25,13 +25,13 @@ class SimulatorFrame
 private:
 	Billboard			billboard;			//LEDマトリクス
 	LineControler		linecontroler;		//路線情報制御クラス
-	StringControler		stringcontroler;	//文字列情報
-	TimetableControler	timetablecontroler;	//時刻表
+	StringControler		stringcontroler;	//文字列情報制御クラス
+	TimetableControler	timetablecontroler;	//時刻表制御クラス
 public:
 	SimulatorFrame();	//コンストラクタ
 	void Start();		//稼働開始メソッド
 	~SimulatorFrame();	//デストラクタ
 private:
-	void MainLoop();	//主処理メソッド
+	void MainLoop();	//主実行メソッド
 };
 
