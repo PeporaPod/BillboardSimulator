@@ -11,8 +11,9 @@
 class StringControler
 {
 private:
-	std::vector<StringInformation> vecstrinfo;			//文字列情報格納ベクトル
-	std::array<StringInformation, 11> vecnumstrinfo;	//数字情報(0-9)+':'格納ベクトル
+	std::vector<StringInformation>		vecstrinfo;		//文字列情報格納ベクトル
+	std::array<StringInformation, 11>	vecnumstrinfo;	//数字情報(0-9)+':'格納ベクトル
+	std::stack<std::string>				shortage;		//対応する文字列情報ファイルが存在しない文字列
 public:
 	//初期化系メソッド
 	StringControler();												//コンストラクタ
