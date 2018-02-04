@@ -37,6 +37,9 @@ void StringEditorFrame::Start()
 //
 StringEditorFrame::~StringEditorFrame()
 {
+	ClearDrawScreen();
+	ScreenFlip();
+	ClearDrawScreen();
 }
 
 
@@ -55,10 +58,12 @@ void StringEditorFrame::MainLoop()
 		/*描画処理*/
 			//裏画面の初期化
 		ClearDrawScreen();
+		//LEDマトリクスの点灯状態をクリア
+		billboard.Clear();
 		//情報の描画
 		DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth: %02d | R: %03u G: %03u B: %03u", current_id + 1, current_strinfo.type, current_strinfo.str.c_str(), current_strinfo.width, current_strinfo.R, current_strinfo.G, current_strinfo.B);
 		//LEDマトリクスへマッピングを反映
-		billboard.Commit(current_strinfo.led_map, GetColor(current_strinfo.R, current_strinfo.G, current_strinfo.B));
+		billboard.Commit(current_strinfo);
 		//LEDマトリクスの描画
 		billboard.Draw();
 		//画面のフリッピング
@@ -111,8 +116,9 @@ void StringEditorFrame::EditorMode(StringInformation strinfo, unsigned int regis
 	int radius;
 	billboard.GetPositionReference(&position_x, &position_y, &radius);
 	while (!ProcessMessage() && !ClearDrawScreen()) {
+		billboard.Clear();
 		DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth: %02d | R: %03u G: %03u B: %03u", register_id + 1, strinfo.type, strinfo.str.c_str(), strinfo.width, strinfo.R, strinfo.G, strinfo.B);
-		billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
+		billboard.Commit(strinfo);
 		billboard.Draw();
 		DrawLine(position_x[cursor_column] - radius, position_y[cursor_row] + radius, position_x[cursor_column] + radius, position_y[cursor_row] + radius, GetColor(255, 255, 255));
 		ScreenFlip();
@@ -169,8 +175,9 @@ void StringEditorFrame::EditorMode(StringInformation strinfo, unsigned int regis
 		}
 		else if (CheckHitKey(KEY_INPUT_T)) {
 			ClearDrawScreen();
+			billboard.Clear();
 			DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c /\nwidth: %02d | R: %03u G: %03u B: %03u", register_id + 1, strinfo.type, strinfo.width, strinfo.R, strinfo.G, strinfo.B);
-			billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
+			billboard.Commit(strinfo);
 			billboard.Draw();
 			ScreenFlip();
 			char str[64];
@@ -179,35 +186,39 @@ void StringEditorFrame::EditorMode(StringInformation strinfo, unsigned int regis
 		}
 		else if (CheckHitKey(KEY_INPUT_W)) {
 			ClearDrawScreen();
+			billboard.Clear();
 			DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth:", register_id + 1, strinfo.type, strinfo.str.c_str());
 			DrawFormatString(GetDrawFormatStringWidth("width: %02d | ", strinfo.width), (int)(2.5 * font_size), GetColor(200, 200, 200), "R: %03u G: %03u B: %03u", strinfo.R, strinfo.G, strinfo.B);
-			billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
+			billboard.Commit(strinfo);
 			billboard.Draw();
 			ScreenFlip();
 			strinfo.width = KeyInputNumber(GetDrawFormatStringWidth("width: "), (int)(2.5 * font_size), 64, 0, FALSE);
 		}
 		else if (CheckHitKey(KEY_INPUT_R)) {
 			ClearDrawScreen();
+			billboard.Clear();
 			DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth: %02d | R:", register_id + 1, strinfo.type, strinfo.str.c_str(), strinfo.width);
 			DrawFormatString(GetDrawFormatStringWidth("width: %02d | R: %03u ", strinfo.width, strinfo.R), (int)(2.5 * font_size), GetColor(200, 200, 200), "G: %03u B: %03u", strinfo.G, strinfo.B);
-			billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
+			billboard.Commit(strinfo);
 			billboard.Draw();
 			ScreenFlip();
 			strinfo.R = KeyInputNumber(GetDrawFormatStringWidth("width: %02d | R: ", strinfo.width), (int)(2.5 * font_size), 255, 0, FALSE);
 		}
 		else if (CheckHitKey(KEY_INPUT_G)) {
 			ClearDrawScreen();
+			billboard.Clear();
 			DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth: %02d | R: %03u G:", register_id + 1, strinfo.type, strinfo.str.c_str(), strinfo.width, strinfo.R);
 			DrawFormatString(GetDrawFormatStringWidth("width: %02d | R: %03u G: %03u ", strinfo.width, strinfo.R, strinfo.G), (int)(2.5 * font_size), GetColor(200, 200, 200), "B: %03u", strinfo.B);
-			billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
+			billboard.Commit(strinfo);
 			billboard.Draw();
 			ScreenFlip();
 			strinfo.G = KeyInputNumber(GetDrawFormatStringWidth("width: %02d | R: %03u G: ", strinfo.width, strinfo.R), (int)(2.5 * font_size), 255, 0, FALSE);
 		}
 		else if (CheckHitKey(KEY_INPUT_B)) {
 			ClearDrawScreen();
+			billboard.Clear();
 			DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth: %02d | R: %03u G: %03u B:", register_id + 1, strinfo.type, strinfo.str.c_str(), strinfo.width, strinfo.R, strinfo.G);
-			billboard.Commit(strinfo.led_map, GetColor(strinfo.R, strinfo.G, strinfo.B));
+			billboard.Commit(strinfo);
 			billboard.Draw();
 			ScreenFlip();
 			strinfo.B = KeyInputNumber(GetDrawFormatStringWidth("width: %02d | R: %03u G: %03u B: ", strinfo.width, strinfo.R, strinfo.G), (int)(2.5 * font_size), 255, 0, FALSE);

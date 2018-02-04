@@ -45,6 +45,9 @@ void SimulatorFrame::Start()
 //
 SimulatorFrame::~SimulatorFrame()
 {
+	ClearDrawScreen();
+	ScreenFlip();
+	ClearDrawScreen();
 }
 
 
@@ -72,18 +75,43 @@ void SimulatorFrame::MainLoop()
 		}
 		while (timetablecontroler.GetTrainInformation(++id).departure_time <= datedata.Hour * 100 + datedata.Min);
 		for (unsigned int i = 0; i < position_y.size() / 16; i++) {
-			billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(id + i).line_str_id[engtrig]), 16 * i, 5);
-			billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(id + i).type_id[engtrig]), 16 * i, 42);
-			billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(id + i).destination_id[engtrig]), 16 * i, 80);
+			unsigned int offset_column = 5;
+			billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(id + i).line_str_id[engtrig]), 16 * i, offset_column);
+			offset_column += 32 + 5;
+			billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(id + i).type_id[engtrig]), 16 * i, offset_column);
+			offset_column += 32;
+			billboard.Commit(stringcontroler.GetStringInformation(timetablecontroler.GetTrainInformation(id + i).destination_id[engtrig]), 16 * i, offset_column);
+			offset_column += 64;
 			if (timetablecontroler.GetTrainInformation(id + i).departure_time % 2400 / 1000)
-				billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 2400 / 1000), 16 * i, 154);
-			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 2400 / 100 % 10), 16 * i, 166);
-			billboard.Commit(stringcontroler.GetNumberStringInformation(10), 16 * i, 178);
-			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time / 10 % 10), 16 * i, 181);
-			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 10), 16 * i, 193);
+				billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 2400 / 1000), 16 * i, offset_column);
+			offset_column += 12;
+			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 2400 / 100 % 10), 16 * i, offset_column);
+			offset_column += 12;
+			billboard.Commit(stringcontroler.GetNumberStringInformation(10), 16 * i, offset_column);
+			offset_column +=  3;
+			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time / 10 % 10), 16 * i, offset_column);
+			offset_column += 12;
+			billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).departure_time % 10), 16 * i, offset_column);
+			offset_column += 12;
+			if (timetablecontroler.GetTrainInformation(id + i).dep) {
+				if (engtrig) billboard.Commit(stringcontroler.GetStringInformation("Žn”­", 'E'), 16 * i, offset_column);
+				else billboard.Commit(stringcontroler.GetStringInformation("Žn”­", 'J'), 16 * i, offset_column);
+			}
+			if (timetablecontroler.GetTrainInformation(id + i).track / 10) {
+				offset_column += 16;
+				billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).track / 10), 16 * i, offset_column);
+				offset_column += 10;
+				billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).track % 10), 16 * i, offset_column);
+			}
+			else {
+				offset_column += 21;
+				billboard.Commit(stringcontroler.GetNumberStringInformation(timetablecontroler.GetTrainInformation(id + i).track % 10), 16 * i, offset_column);
+			}
 			billboard.Commit(linecontroler.GetLineInformation(timetablecontroler.GetTrainInformation(id + i).line_color_id), 16 * i);
 		}
 		billboard.Draw();
 		ScreenFlip();
+		billboard.Clear();
 	}
 }
+

@@ -26,8 +26,8 @@ MainFrame::MainFrame()
 //	Startメソッド
 //
 //		DXライブラリの起動
-//		モード設定 / 終了
-//		各モードへ処理を委譲
+//		モード選択 / 終了
+//		選択したモードへ処理を引き継ぐ
 //
 //
 //
@@ -37,7 +37,7 @@ bool MainFrame::Start()
 	
 	/*メインループ*/
 	do {
-		mode = -1;											//エラー対応用の初期化
+		mode = -1;											//選択モードを初期化
 
 		/*モードセレクタ*/
 		modeselectorframe = new ModeSelectorFrame;			//モードセレクタを構築
@@ -85,3 +85,4 @@ MainFrame::~MainFrame()
 {
 	DxLib_End();	//DXライブラリの終了
 }
+

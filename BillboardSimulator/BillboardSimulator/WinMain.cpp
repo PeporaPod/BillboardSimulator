@@ -15,7 +15,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 {
 	MainFrame mainframe;	//メインフレームの構築
 	if (mainframe.Start())	//メインフレームの稼働開始
-		return 0;					//正常終了
+		return  0;			//正常終了
 	else
-		return -1;					//異常終了
+		return -1;			//異常終了
 }
+

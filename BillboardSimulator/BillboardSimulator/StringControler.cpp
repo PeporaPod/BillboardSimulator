@@ -87,6 +87,7 @@ int StringControler::GetStringID(std::string str, char type)
 {
 	for (unsigned int i = 0; i < vecstrinfo.size(); i++)
 		if (vecstrinfo[i].str == str && vecstrinfo[i].type == type) return i;	//•¶Žš—ñ,•¶Žš—ñŽí‚ª‡’v‚µ‚½
+	shortage.push(str);
 	return -1;	//‡’v‚·‚éƒf[ƒ^‚ª‚È‚©‚Á‚½ê‡
 }
 
@@ -104,6 +105,16 @@ StringControler::~StringControler()
 	for (unsigned int i = 0; i < vecstrinfo.size(); i++) {
 		sprintf_s<sizeof(number)>(number, "%03d", i + 1);
 		file << number << " | " << vecstrinfo[i].type << ": " << vecstrinfo[i].str << std::endl;
+	}
+	file.close();
+
+	if (shortage.empty()) return;
+	file.open("STR\\shortagelist.txt");
+	if (!file.is_open()) return;
+	std::string str;
+	while (!shortage.empty()) {
+		file << shortage.top() << std::endl;
+		shortage.pop();
 	}
 }
 
@@ -156,5 +167,4 @@ error_jump:
 
 	return true;	//“Ç‚ÝŽæ‚è‚ðI—¹
 }
-
 

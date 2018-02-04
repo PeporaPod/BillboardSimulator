@@ -55,10 +55,12 @@ void StringDisplayFrame::MainLoop()
 		/*描画処理*/
 			//裏画面の初期化
 		ClearDrawScreen();
+			//LEDマトリクスの点灯状態をクリア
+		billboard.Clear();
 			//情報の描画
 		DrawFormatString(0, (int)(0.5 * font_size), GetColor(200, 200, 200), "ID:%03d / type:%c / %s<EOF>\nwidth: %02d | R: %03u G: %03u B: %03u", current_id + 1, current_strinfo.type, current_strinfo.str.c_str(), current_strinfo.width, current_strinfo.R, current_strinfo.G, current_strinfo.B);
 			//LEDマトリクスへマッピングを反映
-		billboard.Commit(current_strinfo.led_map, GetColor(current_strinfo.R, current_strinfo.G, current_strinfo.B));
+		billboard.Commit(current_strinfo);
 			//LEDマトリクスの描画
 		billboard.Draw();
 			//画面のフリッピング
